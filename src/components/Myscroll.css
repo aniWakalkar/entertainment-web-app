@@ -1,0 +1,57 @@
+  /* Container for the scrollable content */
+  .scroll-trending {
+    /* width: 300px; Set a width for the container */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Keep content in a single line */
+  }
+
+
+
+  /* Styling the scrollbar */
+  .scroll-trending::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+    height:8px
+  }
+
+  .scroll-trending::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the track */
+    border-radius: 5px;
+  }
+
+  .scroll-trending::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the thumb */
+    border-radius: 5px; /* Rounded corners */
+  }
+
+  .scroll-trending::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color of the thumb on hover */
+  }
+
+  .play-icon {
+    transition: opacity 0.3s ease;
+  }
+  
+  .play-icon:hover {
+    opacity: 100%;
+  }
+  
+  .outfit_light{
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  .outfit_medium{
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+  }
+
+
+
+  .search:focus{
+    border-bottom: 1px solid #5A698F;
+  }
+ 

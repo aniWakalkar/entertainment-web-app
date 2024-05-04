@@ -1,21 +1,32 @@
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from "./Home";
-import Home_1 from "./Home_1";
+import Movies from "./Movies";
 import NavbarSimple from "./NavbarSimple";
+import Saved from "./Saved";
+import TvSeries from "./TvSeries";
 
 function Layout() {
   return (
-    <Router className="bg-[#ffc0cb0d]">
+    <Router className="cursor-pointer">
       <NavbarSimple />
       <Routes>
         <Route exact path="/entertainment-web-app/" element={<Home />} />
-        <Route exact path="/entertainment-web-app/Home" element={<Home_1 />} />
-        {/* <Route
+        <Route
           exact
-          path="/entertainment-web-app/MyFlashcardsPage"
-          element={<MyFlashcardsPage />}
-        /> */}
+          path="/entertainment-web-app/Movies"
+          element={<Movies />}
+        />
+        <Route
+          exact
+          path="/entertainment-web-app/Tv_series"
+          element={<TvSeries />}
+        />
+        <Route
+          exact
+          path="/entertainment-web-app/Saved"
+          element={<Saved />}
+        />
         {/* <Route
           exact
           path="/entertainment-web-app/FlashcardDetailsPage/:id"
