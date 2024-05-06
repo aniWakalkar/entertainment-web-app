@@ -6,10 +6,12 @@ import React, { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaPlayCircle } from "react-icons/fa";
 import { MdOutlineBookmark } from "react-icons/md";
+import { useSelector } from 'react-redux';
 import "./Myscroll.css";
 import SearchBar from "./SearchBar";
 
 function TvSeries() {
+  const search_Query_1 = useSelector((state) => state.search_Query);
   const[localTv_Series, setLocalGetTv_Series] = useState([])
   const[Tv_SeriesEmsId, setTv_SeriesEmsId] = useState(JSON.parse(localStorage.getItem("Tv_SeriesEmsId")) || [])
   
@@ -52,17 +54,29 @@ function TvSeries() {
     localStorage.setItem("Tv_SeriesEmsId", JSON.stringify(isEmsId))
     localStorage.setItem("isBookMarkedTvSeries", JSON.stringify(existingArray))
   }
-
+  
   useEffect(() => {
     const isTv_Series = JSON.parse(localStorage.getItem("isTv_Series"));
-    if(isTv_Series === null){
+    if (isTv_Series === null){
       getTv_series();
-      console.log("requested")
-    }else{
-      setLocalGetTv_Series(isTv_Series)
+      console.log("requested");
+    } else {
+      setLocalGetTv_Series(isTv_Series);
     }
-
-  }, [Tv_SeriesEmsId]);
+    
+    if (search_Query_1 !== "") {
+      setLocalGetTv_Series(prevTvSeries => {
+        let searchArray = [];
+        for (let x in prevTvSeries) {
+          if (prevTvSeries[x].name.toLowerCase().includes(search_Query_1)) {
+            searchArray.push(prevTvSeries[x]);
+          }
+        }
+        return searchArray;
+      });
+    }
+  }, [Tv_SeriesEmsId, search_Query_1]);
+  
 
   return (
     <div

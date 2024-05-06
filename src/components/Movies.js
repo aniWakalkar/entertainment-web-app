@@ -6,9 +6,11 @@ import React, { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaPlayCircle } from "react-icons/fa";
 import { MdOutlineBookmark } from "react-icons/md";
+import { useSelector } from 'react-redux';
 import SearchBar from "./SearchBar";
 
 function Movies() {
+  const search_Query_1 = useSelector((state) => state.search_Query);
   const[localGetMovies, setLocalGetMovies] = useState([])
   const[MoviesEmsId, setMoviesEmsId] = useState(JSON.parse(localStorage.getItem("MoviesEmsId")) || [])
 
@@ -61,7 +63,19 @@ function Movies() {
     }else{
       setLocalGetMovies(isMovies)
     }
-  }, [MoviesEmsId]);
+
+    if (search_Query_1 !== "") {
+      setLocalGetMovies(prevTvSeries => {
+        let searchArray = [];
+        for (let x in prevTvSeries) {
+          if (prevTvSeries[x].name.toLowerCase().includes(search_Query_1)) {
+            searchArray.push(prevTvSeries[x]);
+          }
+        }
+        return searchArray;
+      }); 
+    }
+  }, [MoviesEmsId, search_Query_1]);
 
   return (
     <div

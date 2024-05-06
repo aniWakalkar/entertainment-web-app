@@ -33,12 +33,11 @@ function NavList() {
 
   useEffect(() => {
     localStorage.setItem("isActive", isActive.toString());
-  }, [isActive]);
+  }, [isActive, ]);
 
   return (
     <ul className="">
       {List.map((value, index) => {
-        console.log("isActive:", isActive, "index:", index);
         return (
           <Typography
             key={index}

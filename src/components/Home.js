@@ -6,10 +6,12 @@ import React, { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaPlayCircle } from "react-icons/fa";
 import { MdOutlineBookmark } from "react-icons/md";
+import { useSelector } from 'react-redux';
 import "./Myscroll.css";
 import SearchBar from "./SearchBar";
 
 function Home() {
+  const search_Query_1 = useSelector((state) => state.search_Query);
   const[trending, setTrending] = useState([])
   
   const[recommanded, setRecommanded] = useState([])
@@ -88,7 +90,20 @@ function Home() {
       setTrending(isTrending)
       setRecommanded(isRecommanded)
     }
-  }, [MoviesEmsId]);
+
+
+    if (search_Query_1 !== "") {
+      setRecommanded(prevTvSeries => {
+        let searchArray = [];
+        for (let x in prevTvSeries) {
+          if (prevTvSeries[x].name.toLowerCase().includes(search_Query_1)) {
+            searchArray.push(prevTvSeries[x]);
+          }
+        }
+        return searchArray;
+      }); 
+    }
+  }, [MoviesEmsId, search_Query_1]);
 
   return (
     <div

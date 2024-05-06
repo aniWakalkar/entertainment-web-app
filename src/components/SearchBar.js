@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { handle_search } from "../store/action/actions";
 import "./Myscroll.css";
 
 function SearchBar() {
-  const[localTv_Series, setLocalGetTv_Series] = useState([])
-  const[searchQuery, setSearchQuery] = useState("")
+  const dispatch = useDispatch()
 
-  const handleSearch = (e)=>{
-    for(let x in localTv_Series){
-      if(localTv_Series[x].name.toLowerCase().includes(e.target.value)){
-        return setSearchQuery(localTv_Series[x])
-      }
-    }
-  }
 
   useEffect(() => {
-    const isTv_Series = JSON.parse(localStorage.getItem("isTv_Series"));
-    if(isTv_Series !== null){
-      setLocalGetTv_Series(isTv_Series)
+    return () => {
+      dispatch(handle_search(""));
     }
-  }, [searchQuery])
+  }, [dispatch])
+
   
     return (
         <div className="serachBar outfit_light bg-[#10141E]">
@@ -46,7 +40,7 @@ function SearchBar() {
                 id="default-search"
                 className="block w-full p-2 ps-5 text-lg text-white outline-none bg-[#10141E] placeholder:text-gray-600 search cursor-pointer"
                 placeholder="Search Mockups, Logos..."
-                onChange={handleSearch}
+                onChange={(e)=>{dispatch(handle_search(e.target.value))}}
                 required
               />
               {/* <button
