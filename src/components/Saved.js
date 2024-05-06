@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { FaPlayCircle } from "react-icons/fa";
 import { MdOutlineBookmark } from "react-icons/md";
 import { useSelector } from 'react-redux';
+import default_image from "./Default/download.png";
 import SearchBar from "./SearchBar";
 
 function Saved() {
@@ -55,15 +56,13 @@ function Saved() {
     if (search_Query_1 !== "") {
       let arrayTv = []
       arrayTv = localGetBookMarkedTvSeries.filter((value, index)=>{
-        return value.name.toLowerCase().includes(search_Query_1)
+        return value.title.toLowerCase().includes(search_Query_1)
       })
-      console.log(arrayTv)
       setsearchedTVvalue(arrayTv)
       let arrayMovie = []
       arrayMovie = localGetBookMarkedMovies.filter((value, index)=>{
         return value.name.toLowerCase().includes(search_Query_1)
       })
-      console.log(arrayMovie)
       setsearchedMovievalue(arrayMovie)
     }
 
@@ -71,7 +70,6 @@ function Saved() {
       setsearchedTVvalue([]);
       setsearchedMovievalue([]);
     }
-    console.log(search_Query_1)
   }, [localGetBookMarkedTvSeries, localGetBookMarkedMovies, localGetBookMarkedTvSeriesRemoved, localGetBookMarkedMoviesRemoved, search_Query_1])
   
   return (
@@ -150,7 +148,6 @@ function Saved() {
       <h4 className="outfit_light" style={{fontSize:"24px"}}>BookMarked TV Series</h4>
 
         <ul className="grid grid-cols-5 gap-4">
-          {console.log(searchedTVvalue.length)}
           {
           searchedTVvalue.length === 0 &&
           localGetBookMarkedTvSeries.length > 0 && 
@@ -158,11 +155,12 @@ function Saved() {
           return <li className="my-3 cursor-pointer" key={index}>
             <Card className="w-52 relative bg-[#10141E] shadow-none">
                 <div className="relative">
-                  <img
-                    src={data.posterImage.url}
-                    alt="card"
-                    className="w-52 h-52 rounded-md"
-                  />
+                <img
+                  src={data.image ? data.image : default_image}
+                  alt="card"
+                  className="w-52 h-52 rounded-md"
+                  onError={(e) => { e.target.src = default_image; }}
+                />
                   {/* Inner div with play icon */}
                   <div className="play-icon absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-[#463f3f8f] text-base">
                     <div className="absolute inset-0 flex items-center justify-evenly bg-[#ffffff6a] opacity-100 transition duration-300 rounded-2xl text-white" style={{ width: "100px", height: "35px", left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}>
@@ -173,8 +171,8 @@ function Saved() {
                 <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top:"8px", right:"16px" }} onClick={()=>{handle_BookMarkedTvSeries(index)}}>
                   <MdOutlineBookmark style={{ width: "20px", height: "21px",}} />
                 </div>
-              <p className="ml-2  text-gray-500 outfit_light" style={{fontSize:"18px"}}>{data.releaseDate && data.releaseDate.slice(0, 4)} . type</p>
-              <p className="ml-2  text-white outfit_medium" style={{fontSize:"18px"}}>{data.name}</p>
+              <p className="ml-2  text-gray-500 outfit_light" style={{fontSize:"18px"}}>{data.year && data.year.slice(0, 4)} . type</p>
+              <p className="ml-2  text-white outfit_medium" style={{fontSize:"18px"}}>{data.title}</p>
             </Card>
           </li>
           })
@@ -186,11 +184,12 @@ function Saved() {
           return <li className="my-3 cursor-pointer" key={index}>
             <Card className="w-52 relative bg-[#10141E] shadow-none">
                 <div className="relative">
-                  <img
-                    src={data.posterImage.url}
-                    alt="card"
-                    className="w-52 h-52 rounded-md"
-                  />
+                <img
+                  src={data.image ? data.image : default_image}
+                  alt="card"
+                  className="w-52 h-52 rounded-md"
+                  onError={(e) => { e.target.src = default_image; }}
+                />
                   {/* Inner div with play icon */}
                   <div className="play-icon absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-[#463f3f8f] text-base">
                     <div className="absolute inset-0 flex items-center justify-evenly bg-[#ffffff6a] opacity-100 transition duration-300 rounded-2xl text-white" style={{ width: "100px", height: "35px", left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}>
@@ -201,8 +200,8 @@ function Saved() {
                 <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top:"8px", right:"16px" }} onClick={()=>{handle_BookMarkedTvSeries(index)}}>
                   <MdOutlineBookmark style={{ width: "20px", height: "21px",}} />
                 </div>
-              <p className="ml-2  text-gray-500 outfit_light" style={{fontSize:"18px"}}>{data.releaseDate && data.releaseDate.slice(0, 4)} . type</p>
-              <p className="ml-2  text-white outfit_medium" style={{fontSize:"18px"}}>{data.name}</p>
+              <p className="ml-2  text-gray-500 outfit_light" style={{fontSize:"18px"}}>{data.year && data.year.slice(0, 4)} . type</p>
+              <p className="ml-2  text-white outfit_medium" style={{fontSize:"18px"}}>{data.title}</p>
             </Card>
           </li>
           })
