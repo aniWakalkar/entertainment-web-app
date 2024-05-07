@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { handle_search } from "../store/action/actions";
-import "./Myscroll.css";
+import "./myScroll.css";
 
 function SearchBar() {
   const dispatch = useDispatch()

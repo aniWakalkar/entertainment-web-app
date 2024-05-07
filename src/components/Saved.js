@@ -75,6 +75,7 @@ function Saved() {
   return (
     <div
     className="border border-black w-full h-full px-4 text-white"
+    style={{height: "100vh"}}
   > 
     <SearchBar/>
     <div className="movies p-2 my-2">
