@@ -10,7 +10,7 @@
   /* Styling the scrollbar */
   .scroll-trending::-webkit-scrollbar {
     width: 10px; /* Width of the scrollbar */
-    height:8px
+    height:6px
   }
 
   .scroll-trending::-webkit-scrollbar-track {

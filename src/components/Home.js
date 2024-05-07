@@ -109,8 +109,8 @@ function Home() {
 
   return (
     <div
-      className="border border-black w-full h-full px-4 text-white overflow-hidden"
-      style={{ fontFamily: "math", fontSize: "23px"}}
+      className="border border-black w-full  px-4 text-white"
+      style={{ fontFamily: "math", fontSize: "23px" }}
     > 
       <SearchBar/>
       <div className="trending p-2 my-2">
@@ -119,7 +119,7 @@ function Home() {
           <ul className="flex items-center justify-start py-3 scroll-trending overflow-x-auto w-full">
             {trending.length > 0 && trending.map((data, index)=>{
               return (
-              index <= 5 && <li key={index} className="mx-3 cursor-pointer">
+              index <= 4 && <li key={index} className="mx-3 cursor-pointer">
                 <Card className="w-80 relative text-center">
                 <div style={{ width: '100%', height: '170px', position: 'relative' }}>
                   <img
