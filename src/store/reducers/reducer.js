@@ -7,3 +7,11 @@ export const searchQuery = (state = initialState, action) => {
       return state;
   }
 };
+export const Authentication = (state = initialState, action) => {
+  switch (action.type) {
+    case "AUTH":
+      return action.payload;
+    default:
+      return state;
+  }
+};

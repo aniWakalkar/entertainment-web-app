@@ -4,16 +4,11 @@ module.exports = withMT({
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {},
-    // screens: {
-    // sm: "640",
-    // => @media (min-width: 640px) { ... }
-
-    // md: "768",
-    // => @media (min-width: 768px) { ... }
-
-    // lg: "1920px",
-    // => @media (min-width: 1024px) { ... }
-    // },
+    screens: {
+      sm: "375px", // Targeting small screens (e.g., mobile phones)
+      md: "768px", // Targeting medium screens (e.g., tablets)
+      lg: "1280px", // Targeting larger screens (e.g., desktop monitors)
+    },
   },
   plugins: [],
 });

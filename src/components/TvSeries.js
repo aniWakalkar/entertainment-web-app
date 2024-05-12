@@ -85,8 +85,7 @@ function TvSeries() {
 
   return (
     <div
-      className="border border-black w-full  px-4 text-white"
-      style={{ fontFamily: "math", fontSize: "23px" }}
+      className="w-full text-white lg:p-4"
     > 
       <SearchBar/>
       <div className="tv_series p-2 my-2">
@@ -94,16 +93,16 @@ function TvSeries() {
         <div className="list">
           { 
             localTv_Series.length > 0 &&  
-              <ul className="grid grid-cols-5 gap-4">
+              <ul className="grid sm:grid-cols-2 sm:gap-3 md:grid-cols-3 md:gap-3 lg:grid-cols-5 lg:gap-3 my-2">
                 {localTv_Series.map((data, index)=>{
                   return (
-                  index <= 30 && <li key={index} className="my-3 cursor-pointer">
-                    <Card className="w-52 relative bg-[#10141E] shadow-none">
+                  index <= 30 && <li key={index} className="my-3 cursor-pointer p-0 mx-auto">
+                    <Card className="sm:w-[9.9rem] md:w-[13.5rem] w-52 relative bg-[#10141E] shadow-none">
                     <div className="relative">
                     <img
                       src={data.image ? data.image : default_image}
                       alt="card"
-                      className="w-52 h-52 rounded-md"
+                      className="sm:w-[9.9rem] md:w-[13.5rem] w-52 md:h-[12rem] sm:h-[9.5rem] lg:h-[14rem] rounded-md"
                       onError={(e) => { e.target.src = default_image; }}
                     />
                     {/* Inner div with play icon */}

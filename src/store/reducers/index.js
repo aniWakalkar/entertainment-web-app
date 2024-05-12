@@ -1,7 +1,8 @@
 import { combineReducers } from "redux";
-import { searchQuery } from "./reducer";
+import { Authentication, searchQuery } from "./reducer";
 
 const allReducers = combineReducers({
   search_Query: searchQuery,
+  Authenticate: Authentication,
 });
 export default allReducers;

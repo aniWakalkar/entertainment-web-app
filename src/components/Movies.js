@@ -83,25 +83,25 @@ function Movies() {
 
   return (
     <div
-      className="border border-black w-full h-full px-4 text-white"
-      style={{ fontFamily: "math", fontSize: "23px" }}
+      className="w-full text-white lg:p-4"
     > 
       <SearchBar/>
       <div className="movies p-2 my-2">
         <h4 className="outfit_light" style={{fontSize:"24px"}}>Movies</h4>
         <div className="list">
           { localGetMovies.length > 0 &&          
-            <ul className="grid grid-cols-5 gap-4">
+            <ul className="grid sm:grid-cols-2 sm:gap-3 md:grid-cols-3 md:gap-3 lg:grid-cols-5 lg:gap-3 my-2">
               {
                 localGetMovies.map((data, index)=>{
                   return (
-                  index <= 30 && <li key={index} className="my-3 cursor-pointer">
-                    <Card className="w-52 relative bg-[#10141E] shadow-none">
+                  index <= 30 && 
+                  <li key={index} className="my-3 cursor-pointer p-0 mx-auto">
+                    <Card className="sm:w-[9.9rem] md:w-[13.5rem] w-52 relative bg-[#10141E] shadow-none">
                     <div className="relative">
                     <img
                       src={data.posterImage.url}
                       alt="card"
-                      className="w-52 h-52 rounded-md"
+                      className="sm:w-[9.9rem] md:w-[13.5rem] w-52 md:h-[12rem] sm:h-[9.5rem] lg:h-[14rem] rounded-md"
                     />
                       {/* Inner div with play icon */}
                       <div className="play-icon absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-[#463f3f8f] text-base">

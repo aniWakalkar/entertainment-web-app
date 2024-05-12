@@ -15,7 +15,7 @@ function SearchBar() {
 
   
     return (
-        <div className="serachBar outfit_light bg-[#10141E]">
+        <div className="serachBar outfit_light bg-[#10141E] sm:py-2 md:py-3">
           <form className="flex items-center justify-start">
             <div className=" inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
               <svg

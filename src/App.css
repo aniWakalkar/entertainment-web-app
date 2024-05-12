@@ -7,6 +7,26 @@
   pointer-events: none;
 }
 
+
+@media (min-width: 640px) {
+  .responsive-height {
+      height: 200px;
+  }
+}
+
+@media (min-width: 768px) {
+  .responsive-height {
+      height: 300px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-height {
+      height: 400px;
+  }
+}
+
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

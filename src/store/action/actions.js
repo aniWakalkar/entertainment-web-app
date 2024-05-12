@@ -4,3 +4,11 @@ export const handle_search = (query) => {
       payload: query,
     };
   };
+
+
+export const handle_authentication = (query) => {
+  return {
+    type: "AUTH",
+    payload: query,
+  };
+};

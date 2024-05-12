@@ -74,26 +74,25 @@ function Saved() {
   
   return (
     <div
-    className="border border-black w-full h-full px-4 text-white"
-    style={{height: "100vh"}}
+    className="w-full text-white lg:p-4"
   > 
     <SearchBar/>
     <div className="movies p-2 my-2">
       {localGetBookMarkedMovies.length > 0 && <div className="list">
       <h4 className="outfit_light" style={{fontSize:"24px"}}>BookMarked Movies</h4>
 
-        <ul className="grid grid-cols-5 gap-4">
+        <ul className="grid sm:grid-cols-2 sm:gap-3 md:grid-cols-3 md:gap-3 lg:grid-cols-5 lg:gap-3 my-2">
           {
           searchedMovievalue.length === 0 &&
           localGetBookMarkedMovies.length > 0 && 
           localGetBookMarkedMovies.map((data, index)=>{
-          return <li className="my-3 cursor-pointer" key={index}>
-            <Card className="w-52 relative bg-[#10141E] shadow-none">
+          return <li className="my-3 cursor-pointer p-0 mx-auto" key={index}>
+            <Card className="sm:w-[9.9rem] md:w-[13.5rem] w-52 relative bg-[#10141E] shadow-none">
             <div className="relative">
               <img
                 src={data.posterImage.url}
                 alt="card"
-                className="w-52 h-52 rounded-md"
+                className="sm:w-[9.9rem] md:w-[13.5rem] w-52 md:h-[12rem] sm:h-[9.5rem] lg:h-[14rem] rounded-md"
               />
               {/* Inner div with play icon */}
               <div className="play-icon absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-[#463f3f8f] text-base">
@@ -116,13 +115,13 @@ function Saved() {
           {
           searchedMovievalue.length > 0 && 
           searchedMovievalue.map((data, index)=>{
-          return <li className="my-3 cursor-pointer" key={index}>
-            <Card className="w-52 relative bg-[#10141E] shadow-none">
+          return <li className="my-3 cursor-pointer p-0 mx-auto" key={index}>
+            <Card className="sm:w-[9.9rem] md:w-[13.5rem] w-52 relative bg-[#10141E] shadow-none">
             <div className="relative">
               <img
                 src={data.posterImage.url}
                 alt="card"
-                className="w-52 h-52 rounded-md"
+                className="sm:w-[9.9rem] md:w-[13.5rem] w-52 md:h-[12rem] sm:h-[9.5rem] lg:h-[14rem] rounded-md"
               />
               {/* Inner div with play icon */}
               <div className="play-icon absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-[#463f3f8f] text-base">
@@ -148,18 +147,18 @@ function Saved() {
       {localGetBookMarkedTvSeries.length > 0 && <div className={`list ${localGetBookMarkedMovies.length > 0 && `mt-4`}`}>
       <h4 className="outfit_light" style={{fontSize:"24px"}}>BookMarked TV Series</h4>
 
-        <ul className="grid grid-cols-5 gap-4">
+        <ul className="grid sm:grid-cols-2 sm:gap-3 md:grid-cols-3 md:gap-3 lg:grid-cols-5 lg:gap-3 my-2">
           {
           searchedTVvalue.length === 0 &&
           localGetBookMarkedTvSeries.length > 0 && 
           localGetBookMarkedTvSeries.map((data, index)=>{
-          return <li className="my-3 cursor-pointer" key={index}>
-            <Card className="w-52 relative bg-[#10141E] shadow-none">
+          return <li className="my-3 cursor-pointer p-0 mx-auto" key={index}>
+            <Card className="sm:w-[9.9rem] md:w-[13.5rem] w-52 relative bg-[#10141E] shadow-none">
                 <div className="relative">
                 <img
                   src={data.image ? data.image : default_image}
                   alt="card"
-                  className="w-52 h-52 rounded-md"
+                  className="sm:w-[9.9rem] md:w-[13.5rem] w-52 md:h-[12rem] sm:h-[9.5rem] lg:h-[14rem] rounded-md"
                   onError={(e) => { e.target.src = default_image; }}
                 />
                   {/* Inner div with play icon */}
@@ -182,13 +181,13 @@ function Saved() {
           {
           searchedTVvalue.length > 0 && 
           searchedTVvalue.map((data, index)=>{
-          return <li className="my-3 cursor-pointer" key={index}>
-            <Card className="w-52 relative bg-[#10141E] shadow-none">
+          return <li className="my-3 cursor-pointer p-0 mx-auto" key={index}>
+            <Card className="sm:w-[9.9rem] md:w-[13.5rem] w-52 relative bg-[#10141E] shadow-none">
                 <div className="relative">
                 <img
                   src={data.image ? data.image : default_image}
                   alt="card"
-                  className="w-52 h-52 rounded-md"
+                  className="sm:w-[9.9rem] md:w-[13.5rem] w-52 md:h-[12rem] sm:h-[9.5rem] lg:h-[14rem] rounded-md"
                   onError={(e) => { e.target.src = default_image; }}
                 />
                   {/* Inner div with play icon */}

@@ -4,23 +4,24 @@ import { CgProfile } from "react-icons/cg";
 import { CiBookmark } from "react-icons/ci";
 import { MdLocalMovies, MdOutlineMovie } from "react-icons/md";
 import { PiFilmReelFill, PiTelevision } from "react-icons/pi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const List = [
   {
-    tabName: <PiFilmReelFill style={{ width: "23px", height: "35px" }} />,
+
+    tabName: <MdLocalMovies className="w-[25px] h-[30px]"/>,
     path: "/entertainment-web-app/",
   },
   {
-    tabName: <MdLocalMovies style={{ width: "23px", height: "35px" }} />,
+    tabName: <PiFilmReelFill className="w-[25px] h-[30px]"/>,
     path: "/entertainment-web-app/Movies",
   },
   {
-    tabName: <PiTelevision style={{ width: "23px", height: "35px" }} />,
+    tabName: <PiTelevision className="w-[25px] h-[30px]"/>,
     path: "/entertainment-web-app/Tv_series",
   },
   {
-    tabName: <CiBookmark style={{ width: "23px", height: "35px" }} />,
+    tabName: <CiBookmark className="w-[25px] h-[30px]"/>,
     path: "/entertainment-web-app/Saved",
   },
 ];
@@ -36,20 +37,20 @@ function NavList() {
   }, [isActive, ]);
 
   return (
-    <ul className="">
+    <ul className="flex items-center justify-evenly lg:flex-col sm:mx-2 lg:mt-10">
       {List.map((value, index) => {
         return (
           <Typography
             key={index}
             as="li"
+            className="hover:text-[#FC4747] lg:my-2 mx-2"
             variant="small"
             color="blue-gray"
-            className="p-1 font-medium"
           >
             <Link
               to={value.path}
-              className={`flex items-center hover:text-[#FC4747] transition-colors ${
-                isActive === index ? "text-white" : "text-[#8282e7]"
+              className={`${
+                isActive === index ? `text-white` :  `text-[#5A6985] hover:text-[#FC4747]`
               }`}
               onClick={() => setIsActive(index)}
             >
@@ -63,65 +64,83 @@ function NavList() {
 }
 
 export default function NavbarSimple() {
+  const auth = localStorage.getItem('user')
+  const navigate = useNavigate()
   const [openNav, setOpenNav] = useState(false);
-
+  
   const handleWindowResize = () =>
     window.innerWidth >= 960 && setOpenNav(false);
-
+  
   useEffect(() => {
     window.addEventListener("resize", handleWindowResize);
 
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
+    
   }, []);
 
   return (
-    <nav className="py-5 px-2 bg-[#161D2F] rounded-2xl w-[60px] h-fit">
-      <div
-        className=""
-        style={{
-          display: "flex",
-          alignContent: "center",
-          flexWrap: "wrap",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Link
-          to="/entertainment-web-app/"
-          className="flex items-center text-[#FC4747] transition-color mb-5"
-        >
-          {/* Material Tailwind */}
-          <MdOutlineMovie style={{ width: "30px", height: "35px" }} />
-        </Link>
+    <>
+      {auth && <nav className="lg:w-[60px] bg-[#161D2F] lg:rounded-xl flex items-center justify-around lg:justify-start lg:h-fit lg:flex-col p-3 lg:py-5">
 
-        <div className="hidden lg:block">
-          <NavList />
-        </div>
+          <Link
+            to="/entertainment-web-app/"
+            className="text-[#FC4747]"
+          >
+            <MdOutlineMovie className="w-[25px] h-[30px] lg:mt-5" />
+          </Link>
 
-        <Link
-          to="/entertainment-web-app/Profile"
-          className="flex items-center hover:text-red-700 text-white transition-color mt-44"
-        >
-          {/* Material Tailwind */}
-          <CgProfile style={{ width: "23px", height: "35px" }} />
-        </Link>
-        {/* <IconButton
-          variant="text"
-          className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-          ripple={false}
-          onClick={() => setOpenNav(!openNav)}
-        >
-          {openNav ? (
-            <XMarkIcon className="h-6 w-6" strokeWidth={2} />
-          ) : (
-            <Bars3Icon className="h-6 w-6" strokeWidth={2} />
-          )}
-        </IconButton> */}
-      </div>
-      {/* <Collapse open={openNav}><NavList /></Collapse> */}
-    </nav>
+
+          {/* {!auth && <Link
+            to="/entertainment-web-app/signUp"
+            className="flex items-center text-[#FC4747] mb-5"
+          >
+            signUp
+          </Link>}
+
+          {!auth && <Link
+            to="/entertainment-web-app/logIn"
+            className="flex items-center text-[#FC4747] mb-5"
+          >
+            logIn
+          </Link>} */}
+
+
+
+          <div className={auth ? `sm:block md:block lg:block sm:my-auto lg:my-0` : `sm:hidden md:hidden lg:hidden`}>
+            <NavList />
+          </div>
+
+          {auth && <Link
+            to="/entertainment-web-app/logIn"
+            className="hover:text-[#FC4747] text-white lg:mt-40"
+            onClick={()=>{localStorage.removeItem('user'); navigate("/entertainment-web-app/signUp"); localStorage.setItem("isActive", JSON.stringify(0));}}
+          >
+            <CgProfile className="w-[25px] h-[30px]" />
+          </Link>}
+
+          {/* {auth && <Link
+            to="/entertainment-web-app/logIn"
+            className="hover:text-[#FC4747] text-white"
+            onClick={()=>{localStorage.removeItem('user'); navigate("/entertainment-web-app/signUp"); localStorage.setItem("isActive", JSON.stringify(0));}}
+          >
+            logOut
+          </Link>} */}
+          {/* <IconButton
+            variant="text"
+            className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+            ripple={false}
+            onClick={() => setOpenNav(!openNav)}
+          >
+            {openNav ? (
+              <XMarkIcon className="h-6 w-6" strokeWidth={2} />
+            ) : (
+              <Bars3Icon className="h-6 w-6" strokeWidth={2} />
+            )}
+          </IconButton> */}
+        {/* <Collapse open={openNav}><NavList /></Collapse> */}
+      </nav>}
+    </>
   );
 }

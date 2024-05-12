@@ -109,24 +109,23 @@ function Home() {
 
   return (
     <div
-      className="border border-black w-full  px-4 text-white"
-      style={{ fontFamily: "math", fontSize: "23px" }}
+      className="flex-wrap w-full text-white lg:p-4 overflow-x-hidden" // overflow-x-hidden 
     > 
       <SearchBar/>
       <div className="trending p-2 my-2">
-        <h4 className="outfit_medium" style={{fontSize:"24px"}}>Trending</h4>
-        <div className="Trending w-full">
-          <ul className="flex items-center justify-start py-3 scroll-trending overflow-x-auto w-full">
+        <h4 className="outfit_light" style={{fontSize:"24px"}}>Trending</h4>
+        <div className="Trending">
+          <ul className="flex items-center justify-start py-2 scroll-trending overflow-x-auto my-2">
             {trending.length > 0 && trending.map((data, index)=>{
               return (
-              index <= 4 && <li key={index} className="mx-3 cursor-pointer">
-                <Card className="w-80 relative text-center">
-                <div style={{ width: '100%', height: '170px', position: 'relative' }}>
+              index <= 4 && 
+              <li key={index} className="cursor-pointer sm:px-2">
+                <Card className="sm:w-[18.5rem] md:w-[23rem] lg:w-[23rem] relative text-center">
+                <div className="w-[100%] sm:h-[170px] md:h-[180px] relative">
                   <img
                     src={data.posterImage.url}
                     alt="card"
-                    className="rounded-md"
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                    className="rounded-md absolute top-0 left-0 w-full h-full object-cover"
                   />
                   <div className="play-icon absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-[#463f3f8f] text-base">
                   <div className="absolute inset-0 flex items-center justify-evenly bg-[#ffffff6a] opacity-100 transition duration-300 rounded-2xl text-white" style={{ width: "100px", height: "35px", left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}>
@@ -144,8 +143,8 @@ function Home() {
                   <CiBookmark style={{ width: "20px", height: "21px",}}/>
                 </div>
               }
-                  {/* <p className="absolute text-white" style={{ bottom:"20px", left:"16px"}}>Name</p>
-                  <p className="absolute text-red-400" style={{ bottom:"2px", left:"16px"}}>Name</p> */}
+              <p className="absolute text-white" style={{ bottom:"20px", left:"16px"}}>Name</p>
+              <p className="absolute text-red-400" style={{ bottom:"2px", left:"16px"}}>Name</p>
 
                 </Card>
               </li>)
@@ -153,21 +152,23 @@ function Home() {
           </ul>
         </div>
       </div>
-      <div className="recommandedForYou p-2 my-2">
-        <h4 className="outfit_medium" style={{fontSize:"24px"}}>Recommanded For You</h4>
+
+      <div className="recommandedForYou mt-6">
+        <h4 className="outfit_light" style={{fontSize:"24px"}}>Recommanded For You</h4>
         <div className="list">
         { recommanded.length > 0 &&        
-          <ul className="grid grid-cols-5 gap-4">
+          <ul className="grid sm:grid-cols-2 sm:gap-3 md:grid-cols-3 md:gap-3 lg:grid-cols-5 lg:gap-2 my-2">
             {
               recommanded.map((data, index)=>{
                   return (
-                  index <= 30 && <li key={index} className="my-3 cursor-pointer">
-                    <Card className="w-52 relative bg-[#10141E] shadow-none">
+                  index <= 30 && 
+                  <li key={index} className="my-3 cursor-pointer p-0 mx-auto">
+                    <Card className="sm:w-[9.9rem] md:w-[13.5rem] w-52 relative bg-[#10141E] shadow-none">
                     <div className="relative">
                     <img
                       src={data.posterImage.url}
                       alt="card"
-                      className="w-52 h-52 rounded-md"
+                      className="sm:w-[9.9rem] md:w-[13.5rem] w-52 md:h-[12rem] sm:h-[9.5rem] lg:h-[14rem] rounded-md"
                     />
                     {/* Inner div with play icon */}
                     <div className="play-icon absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-[#463f3f8f] text-base">

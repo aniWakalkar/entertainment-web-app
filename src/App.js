@@ -4,7 +4,8 @@ import Layout from "./components/Layout";
 function App() {
   return (
     // 1st background color
-    <div className="bg-[#10141E] p-6 flex justify-start cursor-pointer overflow-y-scroll" style={{height: "100vh"}}>
+    // when screen size lg screen will be a flex-blox
+    <div className="bg-[#10141E] lg:flex lg:justify-start cursor-pointer overflow-y-auto h-dvh p-4 lg:pt-4 lg:pb-0">
       <Layout />
     </div>
   );
