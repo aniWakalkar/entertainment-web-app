@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import "../myScroll.css";
 
 const SignUp = () => {
-  const auth = localStorage.getItem('user')
+  const auth = JSON.parse(localStorage.getItem("user")) || {}
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: '',
@@ -19,14 +19,46 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Implement form submission logic here
-    console.log(formData);
-    localStorage.setItem('user', JSON.stringify(formData))
-    navigate("/entertainment-web-app/")
+  
+    // Check if any field is empty
+    for (let field in formData) {
+      if (formData[field] === '') {
+        // Handle empty field scenario (display error message, etc.)
+        console.log("All fields are required");
+        return;
+      }
+    }
+  
+    // Check if passwords match
+    if (formData.password !== formData.rPassword) {
+      // Handle password mismatch scenario (display error message, etc.)
+      console.log("Passwords don't match");
+      return;
+    }
+  
+    // Retrieve user array from local storage
+    // let users = JSON.parse(localStorage.getItem("user")) || {};
+  
+    // Check if email already exists
+    // const existingUser = users.find(user => user.email === formData.email);
+    // if (existingUser) {
+    //   // Email already exists, handle accordingly (display error message, etc.)
+    //   console.log("Email already exists");
+    //   return;
+    // }
+  
+    // Add new user
+    formData.logged = true;
+    // users.push(formData);
+    localStorage.setItem('user', JSON.stringify(formData));
+  
+    // Navigate to the next page
+    navigate("/entertainment-web-app/");
   };
   
+  
   useEffect(() => {
-    auth && navigate("/entertainment-web-app/")
+    auth.logged && navigate("/entertainment-web-app/")
   }, [auth])
   
   return (

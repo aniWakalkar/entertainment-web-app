@@ -64,13 +64,22 @@ function NavList() {
 }
 
 export default function NavbarSimple() {
-  const auth = localStorage.getItem('user')
+  const auth = JSON.parse(localStorage.getItem("user")) || {}
   const navigate = useNavigate()
   const [openNav, setOpenNav] = useState(false);
   
   const handleWindowResize = () =>
     window.innerWidth >= 960 && setOpenNav(false);
   
+  const handleLogOut = () => {
+    auth.logged = false;
+    localStorage.setItem("user", JSON.stringify(auth));
+    // Navigate to the logout page
+    navigate("/entertainment-web-app/signUp");
+    localStorage.setItem("isActive", JSON.stringify(0));
+  };
+  
+
   useEffect(() => {
     window.addEventListener("resize", handleWindowResize);
 
@@ -82,7 +91,7 @@ export default function NavbarSimple() {
 
   return (
     <>
-      {auth && <nav className="lg:w-[60px] bg-[#161D2F] lg:rounded-xl flex items-center justify-around lg:justify-start lg:h-fit lg:flex-col p-3 lg:py-5">
+      {auth.logged && <nav className="lg:w-[60px] bg-[#161D2F] lg:rounded-xl flex items-center justify-around lg:justify-start lg:h-fit lg:flex-col p-3 lg:py-5">
 
           <Link
             to="/entertainment-web-app/"
@@ -92,14 +101,14 @@ export default function NavbarSimple() {
           </Link>
 
 
-          {/* {!auth && <Link
+          {/* {!auth.logged && <Link
             to="/entertainment-web-app/signUp"
             className="flex items-center text-[#FC4747] mb-5"
           >
             signUp
           </Link>}
 
-          {!auth && <Link
+          {!auth.logged && <Link
             to="/entertainment-web-app/logIn"
             className="flex items-center text-[#FC4747] mb-5"
           >
@@ -108,19 +117,19 @@ export default function NavbarSimple() {
 
 
 
-          <div className={auth ? `sm:block md:block lg:block sm:my-auto lg:my-0` : `sm:hidden md:hidden lg:hidden`}>
+          <div className={auth.logged ? `sm:block md:block lg:block sm:my-auto lg:my-0` : `sm:hidden md:hidden lg:hidden`}>
             <NavList />
           </div>
 
-          {auth && <Link
+          {auth.logged && <Link
             to="/entertainment-web-app/logIn"
             className="hover:text-[#FC4747] text-white lg:mt-40"
-            onClick={()=>{localStorage.removeItem('user'); navigate("/entertainment-web-app/signUp"); localStorage.setItem("isActive", JSON.stringify(0));}}
+            onClick={handleLogOut}
           >
             <CgProfile className="w-[25px] h-[30px]" />
           </Link>}
 
-          {/* {auth && <Link
+          {/* {auth.logged && <Link
             to="/entertainment-web-app/logIn"
             className="hover:text-[#FC4747] text-white"
             onClick={()=>{localStorage.removeItem('user'); navigate("/entertainment-web-app/signUp"); localStorage.setItem("isActive", JSON.stringify(0));}}

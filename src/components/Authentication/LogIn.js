@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import "../myScroll.css";
 
 const LogIn = () => {
-  const auth = localStorage.getItem('user')
+  const auth = JSON.parse(localStorage.getItem("user")) || {}
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: '',
@@ -18,14 +18,28 @@ const LogIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+  
+    // Check if any field is empty
+    for (let field in formData) {
+      if (formData[field] === '') {
+        // Handle empty field scenario (display error message, etc.)
+        console.log("All fields are required");
+        return;
+      }
+    }
     // Implement form submission logic here
-    console.log(formData);
-    localStorage.setItem('user', JSON.stringify(formData))
-    navigate("/entertainment-web-app/")
+    if(formData.email === auth.email && formData.password === auth.password){
+      auth.logged = true
+      localStorage.setItem('user', JSON.stringify(auth))
+      navigate("/entertainment-web-app/")
+    }else{
+      console.log("email or Passwords don't match")
+      return
+    }
   };
   
   useEffect(() => {
-    auth && navigate("/entertainment-web-app/")
+    auth.logged && navigate("/entertainment-web-app/")
   }, [auth])
   
   return (
