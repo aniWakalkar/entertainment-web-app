@@ -26,7 +26,19 @@ const List = [
   },
 ];
 
-function NavList() {
+
+export default function NavbarSimple() {
+  const navigate = useNavigate()
+  
+  const handleLogOut = () => {
+    // auth.logged = false;
+    // localStorage.setItem("user", JSON.stringify(auth));
+    // // Navigate to the logout page
+    // navigate("/entertainment-web-app/signUp");
+    // localStorage.setItem("isActive", JSON.stringify(0));
+    console.log("false")
+  };
+
   const [isActive, setIsActive] = useState(() => {
     const storedActiveTab = localStorage.getItem("isActive");
     return storedActiveTab !== null ? parseInt(storedActiveTab) : 0;
@@ -35,9 +47,21 @@ function NavList() {
   useEffect(() => {
     localStorage.setItem("isActive", isActive.toString());
   }, [isActive, ]);
-
+  
   return (
-    <ul className="flex items-center justify-evenly lg:flex-col sm:mx-2 lg:mt-10">
+    <>
+      <nav className="lg:w-[60px] bg-[#161D2F] lg:rounded-xl flex items-center justify-around lg:justify-start lg:h-fit lg:flex-col p-3 lg:py-5">
+
+          <Link
+            to="/entertainment-web-app/"
+            className="text-[#FC4747]"
+            onClick={() => setIsActive(0)}
+          >
+            <MdOutlineMovie className="w-[25px] h-[30px] lg:mt-5" />
+          </Link>
+
+          <div className="sm:block md:block lg:block sm:my-auto lg:my-0">
+          <ul className="flex items-center justify-evenly lg:flex-col sm:mx-2 lg:mt-10">
       {List.map((value, index) => {
         return (
           <Typography
@@ -60,96 +84,16 @@ function NavList() {
         );
       })}
     </ul>
-  );
-}
-
-export default function NavbarSimple() {
-  const auth = JSON.parse(localStorage.getItem("user")) || {}
-  const navigate = useNavigate()
-  const [openNav, setOpenNav] = useState(false);
-  
-  const handleWindowResize = () =>
-    window.innerWidth >= 960 && setOpenNav(false);
-  
-  const handleLogOut = () => {
-    auth.logged = false;
-    localStorage.setItem("user", JSON.stringify(auth));
-    // Navigate to the logout page
-    navigate("/entertainment-web-app/signUp");
-    localStorage.setItem("isActive", JSON.stringify(0));
-  };
-  
-
-  useEffect(() => {
-    window.addEventListener("resize", handleWindowResize);
-
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-    
-  }, []);
-
-  return (
-    <>
-      {auth.logged && <nav className="lg:w-[60px] bg-[#161D2F] lg:rounded-xl flex items-center justify-around lg:justify-start lg:h-fit lg:flex-col p-3 lg:py-5">
-
-          <Link
-            to="/entertainment-web-app/"
-            className="text-[#FC4747]"
-          >
-            <MdOutlineMovie className="w-[25px] h-[30px] lg:mt-5" />
-          </Link>
-
-
-          {/* {!auth.logged && <Link
-            to="/entertainment-web-app/signUp"
-            className="flex items-center text-[#FC4747] mb-5"
-          >
-            signUp
-          </Link>}
-
-          {!auth.logged && <Link
-            to="/entertainment-web-app/logIn"
-            className="flex items-center text-[#FC4747] mb-5"
-          >
-            logIn
-          </Link>} */}
-
-
-
-          <div className={auth.logged ? `sm:block md:block lg:block sm:my-auto lg:my-0` : `sm:hidden md:hidden lg:hidden`}>
-            <NavList />
           </div>
 
-          {auth.logged && <Link
+          <Link
             to="/entertainment-web-app/logIn"
             className="hover:text-[#FC4747] text-white lg:mt-40"
             onClick={handleLogOut}
           >
             <CgProfile className="w-[25px] h-[30px]" />
-          </Link>}
-
-          {/* {auth.logged && <Link
-            to="/entertainment-web-app/logIn"
-            className="hover:text-[#FC4747] text-white"
-            onClick={()=>{localStorage.removeItem('user'); navigate("/entertainment-web-app/signUp"); localStorage.setItem("isActive", JSON.stringify(0));}}
-          >
-            logOut
-          </Link>} */}
-          {/* <IconButton
-            variant="text"
-            className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-            ripple={false}
-            onClick={() => setOpenNav(!openNav)}
-          >
-            {openNav ? (
-              <XMarkIcon className="h-6 w-6" strokeWidth={2} />
-            ) : (
-              <Bars3Icon className="h-6 w-6" strokeWidth={2} />
-            )}
-          </IconButton> */}
-        {/* <Collapse open={openNav}><NavList /></Collapse> */}
-      </nav>}
+          </Link>
+      </nav>
     </>
   );
 }

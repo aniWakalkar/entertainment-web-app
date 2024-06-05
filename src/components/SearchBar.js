@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { handle_search } from "../store/action/actions";
-import "./myScroll.css";
+import "./Myscroll.css";
 
 function SearchBar() {
   const dispatch = useDispatch()
@@ -15,7 +15,7 @@ function SearchBar() {
 
   
     return (
-        <div className="serachBar outfit_light bg-[#10141E] sm:py-2 md:py-3">
+        <div className="serachBar outfit_light bg-[#10141E] md:pt-2 sm:pt-2">
           <form className="flex items-center justify-start">
             <div className=" inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
               <svg
