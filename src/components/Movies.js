@@ -12,12 +12,12 @@ import "./Myscroll.css";
 import SearchBar from "./SearchBar";
 
 function Movies() {
-  const search_Query_1 = useSelector((state) => state.search_Query);
   const[localGetMovies, setLocalGetMovies] = useState([])
+  const search_Query_1 = useSelector((state) => state.search_Query);
   const [searchResults, setSearchResults] = useState([]);
   const [searchedItem, setSearchedItem] = useState(false);
 
-  const[isBookMarkedMovies, set_isBookMarkedMovies] = useState(JSON.parse(localStorage.getItem("isBookMarkedMovies")) || [])
+  const[isBookMarkedMovies, set_isBookMarkedMovies] = useState(0)
 
   const getMovies = async () => {
     const options = {
@@ -35,51 +35,37 @@ function Movies() {
       console.error(error);
     }
   };
-
   
-  const handle_Bookmark = async (e)=>{
-    let existingArray = JSON.parse(localStorage.getItem("isBookMarkedMovies")) || [];
-    if (!existingArray.some(item => JSON.stringify(item) === JSON.stringify(e.id))) {
-      existingArray.push(e.id);
-      set_isBookMarkedMovies(existingArray)
-      
-      try {
-        const response = await axios.post('https://testmongo-bjvb.onrender.com/api/bookmark/set/movie', { "search_query" : e}, 
-        {
-          headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': X_RAPIDAPI_KEY
-          }
-        });
-
-        console.log('Data sent successfully:', response.data);
-        localStorage.setItem("isBookMarkedMovies", JSON.stringify(existingArray))
-      } catch (error) {
-          console.error('Failed to send data:', error);
-      }
-    }else{
-      existingArray = existingArray.filter((id, i)=>{
-        return e.id !== id
+const handle_Bookmark = async (e)=>{
+    try {
+      const response = await axios.post('https://testmongo-bjvb.onrender.com/api/bookmark/set/movie', { "id" : e.id}, 
+      {
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': X_RAPIDAPI_KEY
+        }
       });
-      set_isBookMarkedMovies(existingArray)
-      
-      try {
-        const response = await axios.delete(`https://testmongo-bjvb.onrender.com/api/bookmark/delete/movie/${e.id}`, 
-        {
-            headers: {
-                'Content-Type': 'application/json',
-                'x-access-token': X_RAPIDAPI_KEY
-            }
-        });
-
-        console.log('Data sent successfully:', response.data);
-        localStorage.setItem("isBookMarkedMovies", JSON.stringify(existingArray))
-      } catch (error) {
+    } catch (error) {
         console.error('Failed to send data:', error);
-      }
     }
-    
+  set_isBookMarkedMovies(1)
+}
+
+const handle_Bookmark_Remove = async (e)=>{
+  try {
+    const response = await axios.delete(`https://testmongo-bjvb.onrender.com/api/bookmark/delete/movie/${e.id}`, 
+    {
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': X_RAPIDAPI_KEY
+        }
+    });
+
+  } catch (error) {
+    console.error('Failed to send data:', error);
   }
+  set_isBookMarkedMovies(1)
+}
 
   useEffect(() => {
     getMovies();
@@ -100,6 +86,7 @@ function Movies() {
       setSearchResults([]);
       setSearchedItem(false);
     }
+    set_isBookMarkedMovies(0)
   }, [search_Query_1, isBookMarkedMovies]);
 
   return (
@@ -134,15 +121,15 @@ function Movies() {
                       </div>
                     </div>
                     {
-              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { handle_Bookmark(data) }}>
-              {isBookMarkedMovies.includes(data.id) ? 
+              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarked  ? handle_Bookmark_Remove(data): handle_Bookmark(data) }}>
+              {data.bookmarked? 
                 <MdOutlineBookmark style={{ width: "20px", height: "21px" }} /> 
                 : 
                 <CiBookmark style={{ width: "20px", height: "21px" }} />
               }
             </div>
                   }
-                      <p className="ml-2 mt-2 text-gray-500 outfit_light" style={{fontSize:"18px"}}>{data.year && data.year}</p>
+                      <p className="ml-2 mt-2 text-gray-500 outfit_light" style={{fontSize:"18px"}}>{data.year && data.year}{data.genre && data.genre.map((e, i)=>{ return (i < 2 && ` ${e}, `)})}</p>
                       <p className="ml-2  text-white outfit_medium" style={{fontSize:"18px"}}>{data.title && data.title}</p>
                     </Card>
                   </li>
@@ -159,7 +146,7 @@ function Movies() {
               localGetMovies.map((data, index)=>{
                 // const isBookmarked = isBookMarkedMovies.some(item => item.id === data.id);
                   return (
-                  index <= 30 && 
+                  index < 30 && 
                   <li key={index} className="my-3 cursor-pointer p-0 mx-auto">
                     <Card className="sm:w-[9.9rem] md:w-[13.5rem] w-52 relative bg-[#10141E] shadow-none">
                     <div className="relative">
@@ -176,15 +163,15 @@ function Movies() {
                       </div>
                     </div>
                     {
-              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { handle_Bookmark(data) }}>
-              {isBookMarkedMovies.includes(data.id) ? 
+              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarked  ? handle_Bookmark_Remove(data): handle_Bookmark(data) }}>
+              {data.bookmarked? 
                 <MdOutlineBookmark style={{ width: "20px", height: "21px" }} /> 
                 : 
                 <CiBookmark style={{ width: "20px", height: "21px" }} />
               }
             </div>
                   }
-                      <p className="ml-2 mt-2 text-gray-500 outfit_light" style={{fontSize:"18px"}}>{data.year && data.year}</p>
+                      <p className="ml-2 mt-2 text-gray-500 outfit_light" style={{fontSize:"18px"}}>{data.year && data.year}{data.genre && data.genre.map((e, i)=>{ return (i < 2 && ` ${e}, `)})}</p>
                       <p className="ml-2  text-white outfit_medium" style={{fontSize:"18px"}}>{data.title && data.title}</p>
                     </Card>
                   </li>
@@ -195,7 +182,7 @@ function Movies() {
         }
 
         {
-          searchedItem && localGetMovies.length === 0 &&
+          searchedItem &&
           <div className="outfit_medium" style={{textAlign:"center", fontSize: "xxx-large", display: "flex", alignItems: "center",justifyContent: "center" , height: "50vh"}}>
             <p> Movie Not Found </p>
           </div>

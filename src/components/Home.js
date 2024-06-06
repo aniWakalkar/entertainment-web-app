@@ -13,29 +13,29 @@ import SearchBar from "./SearchBar";
 
 function Home() {
   const search_Query_1 = useSelector((state) => state.search_Query);
-  const[trending, setTrending] = useState([])
-  const[recommanded, setRecommanded] = useState([])
+  const [trending, setTrending] = useState([])
+  const [recommanded, setRecommanded] = useState([])
   const [searchResults, setSearchResults] = useState([]);
   const [searchedItem, setSearchedItem] = useState(false);
 
-  const[isBookMarkedMovies, set_isBookMarkedMovies] = useState([])
+  const[isBookMarkedMovies, set_isBookMarkedMovies] = useState(0)
 
-  const getTrending = async () => {
-    const options = {
-      method: "GET",
-      url: "https://testmongo-bjvb.onrender.com/api/get/all/movies",
-      headers: {
-        "x-access-token": X_RAPIDAPI_KEY,
-      },
-    };
+  // const getTrending = async () => {
+  //   const options = {
+  //     method: "GET",
+  //     url: "https://testmongo-bjvb.onrender.com/api/get/all/movies",
+  //     headers: {
+  //       "x-access-token": X_RAPIDAPI_KEY,
+  //     },
+  //   };
 
-    try {
-      const response = await axios.request(options);
-      setTrending(response.data)
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //   try {
+  //     const response = await axios.request(options);
+  //     setTrending(response.data)
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const getRecommanded = async () => {
     const options = {
@@ -49,20 +49,15 @@ function Home() {
     try {
       const response = await axios.request(options);
       setRecommanded(response.data)
+      setTrending(response.data)
     } catch (error) {
       console.error(error);
     }
   };
 
-
   const handle_Bookmark = async (e)=>{
-    let existingArray = JSON.parse(localStorage.getItem("isBookMarkedMovies")) || [];
-    if (!existingArray.some(item => JSON.stringify(item) === JSON.stringify(e.id))) {
-      existingArray.push(e.id);
-      set_isBookMarkedMovies(existingArray)
-      
       try {
-        const response = await axios.post('https://testmongo-bjvb.onrender.com/api/bookmark/set/movie', { "search_query" : e}, 
+        const response = await axios.post('https://testmongo-bjvb.onrender.com/api/bookmark/set/movie', { "id" : e.id}, 
         {
           headers: {
               'Content-Type': 'application/json',
@@ -70,40 +65,33 @@ function Home() {
           }
         });
 
-        console.log('Data sent successfully:', response.data);
-        localStorage.setItem("isBookMarkedMovies", JSON.stringify(existingArray))
       } catch (error) {
           console.error('Failed to send data:', error);
       }
-    }else{
-      existingArray = existingArray.filter((id, i)=>{
-        return e.id !== id
-      });
-      set_isBookMarkedMovies(existingArray)
-      
-      try {
-        const response = await axios.delete(`https://testmongo-bjvb.onrender.com/api/bookmark/delete/movie/${e.id}`, 
-        {
-            headers: {
-                'Content-Type': 'application/json',
-                'x-access-token': X_RAPIDAPI_KEY
-            }
-        });
+    set_isBookMarkedMovies(1)
+  }
 
-        console.log('Data sent successfully:', response.data);
-        localStorage.setItem("isBookMarkedMovies", JSON.stringify(existingArray))
-      } catch (error) {
-        console.error('Failed to send data:', error);
-      }
+  const handle_Bookmark_Remove = async (e)=>{
+    try {
+      const response = await axios.delete(`https://testmongo-bjvb.onrender.com/api/bookmark/delete/movie/${e.id}`, 
+      {
+          headers: {
+              'Content-Type': 'application/json',
+              'x-access-token': X_RAPIDAPI_KEY
+          }
+      });
+
+    } catch (error) {
+      console.error('Failed to send data:', error);
     }
-    
+    set_isBookMarkedMovies(1)
   }
 
 
+
+
 useEffect(() => {
-  getTrending()
   getRecommanded()
-  
   if (search_Query_1 !== "") {
     setSearchResults(() => {
       const searchArray = recommanded.filter(movies =>
@@ -121,6 +109,7 @@ useEffect(() => {
     setSearchResults([]);
     setSearchedItem(false);
   }
+  set_isBookMarkedMovies(0)
 }, [search_Query_1, isBookMarkedMovies]);
 
 
@@ -152,8 +141,8 @@ useEffect(() => {
                   </div>
                 </div>
                 {
-              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { handle_Bookmark(data) }}>
-              {isBookMarkedMovies.includes(data.id) ? 
+              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarked  ? handle_Bookmark_Remove(data): handle_Bookmark(data) }}>
+              {data.bookmarked  ? 
                 <MdOutlineBookmark style={{ width: "20px", height: "21px" }} /> 
                 : 
                 <CiBookmark style={{ width: "20px", height: "21px" }} />
@@ -169,7 +158,7 @@ useEffect(() => {
         </div>
       </div>
 
-      <div className="recommandedForYou mt-2">
+      <div className="recommandedForYou p-2 mt-2">
         <h4 className="outfit_light" style={{fontSize:"24px"}}>Recommanded For You</h4>
         <div className="list">
 
@@ -179,7 +168,7 @@ useEffect(() => {
               searchResults.map((data, index)=>{
                 // const isBookmarked = isBookMarkedMovies.some(item => item.id === data.id);
                   return (
-                  index <= 30 && 
+                  index < 30 && 
                   <li key={index} className="my-3 cursor-pointer p-0 mx-auto">
                     <Card className="sm:w-[9.9rem] md:w-[13.5rem] w-52 relative bg-[#10141E] shadow-none">
                     <div className="relative">
@@ -196,15 +185,15 @@ useEffect(() => {
                       </div>
                     </div>
                     {
-              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { handle_Bookmark(data) }}>
-              {isBookMarkedMovies.includes(data.id) ? 
+              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarked  ? handle_Bookmark_Remove(data): handle_Bookmark(data) }}>
+              {data.bookmarked ? 
                 <MdOutlineBookmark style={{ width: "20px", height: "21px" }} /> 
                 : 
                 <CiBookmark style={{ width: "20px", height: "21px" }} />
               }
             </div>
                   }
-                      <p className="ml-2 mt-2 text-gray-500 outfit_light" style={{fontSize:"18px"}}>{data.year && data.year}</p>
+                      <p className="ml-2 mt-2 text-gray-500 outfit_light" style={{fontSize:"18px"}}>{data.year && data.year}{data.genre && data.genre.map((e, i)=>{ return (i < 2 && ` ${e}, `)})}</p>
                       <p className="ml-2  text-white outfit_medium" style={{fontSize:"18px"}}>{data.title && data.title}</p>
                     </Card>
                   </li>
@@ -221,7 +210,7 @@ useEffect(() => {
               recommanded.map((data, index)=>{
                 // const isBookmarked = isBookMarkedMovies.some(item => item.id === data.id);
                   return (
-                  index <= 30 && 
+                  index < 30 && 
                   <li key={index} className="my-3 cursor-pointer p-0 mx-auto">
                     <Card className="sm:w-[9.9rem] md:w-[13.5rem] w-52 relative bg-[#10141E] shadow-none">
                     <div className="relative">
@@ -238,15 +227,15 @@ useEffect(() => {
                       </div>
                     </div>
                     {
-              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { handle_Bookmark(data) }}>
-              {isBookMarkedMovies.includes(data.id) ? 
+              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarked  ? handle_Bookmark_Remove(data): handle_Bookmark(data) }}>
+              {data.bookmarked ? 
                 <MdOutlineBookmark style={{width:"20px",height:"21px"}}/> 
                 : 
                 <CiBookmark style={{ width: "20px", height: "21px" }}/>
               }
             </div>
                   }
-                      <p className="ml-2 mt-2 text-gray-500 outfit_light" style={{fontSize:"18px"}}>{data.year && data.year}</p>
+                      <p className="ml-2 mt-2 text-gray-500 outfit_light" style={{fontSize:"18px"}}>{data.year && data.year}{data.genre && data.genre.map((e, i)=>{ return (i < 2 && ` ${e}, `)})}</p>
                       <p className="ml-2  text-white outfit_medium" style={{fontSize:"18px"}}>{data.title && data.title}</p>
                     </Card>
                   </li>
@@ -259,7 +248,7 @@ useEffect(() => {
         {
           searchedItem && recommanded.length === 0 &&
           <div className="outfit_medium" style={{textAlign:"center", fontSize: "x-large", display: "flex", alignItems: "center",justifyContent: "center" , height: "30vh"}}>
-            <p> Searched Item Not Found </p>
+            <p> Movies Not Found </p>
           </div>
         }
         </div>
