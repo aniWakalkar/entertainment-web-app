@@ -15,9 +15,9 @@ function Layout() {
     <Router className="cursor-pointer">
       <NavbarSimple />
       <Routes>
-        {/* <Route path="/entertainment-web-app/signUp" element={<SignUp />} />
-        <Route path="/entertainment-web-app/logIn" element={<LogIn />} />
-        <Route element={<PrivateComponent />}> */}
+        {/* <Route path="/entertainment-web-app/signUp" element={<SignUp />} /> */}
+        {/* <Route path="/entertainment-web-app/logIn" element={<LogIn />} /> */}
+        {/* <Route element={<PrivateComponent />}> */}
           <Route path="/entertainment-web-app/" element={<Home />} />
           <Route path="/entertainment-web-app/Movies" element={<Movies />} />
           <Route path="/entertainment-web-app/Tv_series" element={<TvSeries />} />

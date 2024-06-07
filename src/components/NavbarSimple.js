@@ -8,7 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 const List = [
   {
-
     tabName: <MdLocalMovies className="w-[25px] h-[30px]"/>,
     path: "/entertainment-web-app/",
   },
@@ -33,8 +32,8 @@ export default function NavbarSimple() {
   const handleLogOut = () => {
     // auth.logged = false;
     // localStorage.setItem("user", JSON.stringify(auth));
-    // // Navigate to the logout page
-    // navigate("/entertainment-web-app/signUp");
+    // // Navigate to the logIn page
+    // navigate("/entertainment-web-app/logIn");
     // localStorage.setItem("isActive", JSON.stringify(0));
     console.log("false")
   };
@@ -62,28 +61,28 @@ export default function NavbarSimple() {
 
           <div className="sm:block md:block lg:block sm:my-auto lg:my-0">
           <ul className="flex items-center justify-evenly lg:flex-col sm:mx-2 lg:mt-10">
-      {List.map((value, index) => {
-        return (
-          <Typography
-            key={index}
-            as="li"
-            className="hover:text-[#FC4747] lg:my-2 mx-2"
-            variant="small"
-            color="blue-gray"
-          >
-            <Link
-              to={value.path}
-              className={`${
-                isActive === index ? `text-white` :  `text-[#5A6985] hover:text-[#FC4747]`
-              }`}
-              onClick={() => setIsActive(index)}
-            >
-              {value.tabName}
-            </Link>
-          </Typography>
-        );
-      })}
-    </ul>
+            {List.map((value, index) => {
+              return (
+                <Typography
+                  key={index}
+                  as="li"
+                  className="hover:text-[#FC4747] lg:my-2 mx-2"
+                  variant="small"
+                  color="blue-gray"
+                >
+                  <Link
+                    to={value.path}
+                    className={`${
+                      isActive === index ? `text-white` :  `text-[#5A6985] hover:text-[#FC4747]`
+                    }`}
+                    onClick={() => setIsActive(index)}
+                  >
+                    {value.tabName}
+                  </Link>
+                </Typography>
+              );
+            })}
+          </ul>
           </div>
 
           <Link
