@@ -36,7 +36,7 @@ const LogIn = () => {
         }
       });
 
-      localStorage.setItem('user', JSON.stringify(response.data.token));
+      // localStorage.setItem('user', JSON.stringify(response.data.token));
       setToken(response.data.token);
       dispatch(handle_token(response.data.token));
     } catch (error) {

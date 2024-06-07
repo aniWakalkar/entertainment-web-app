@@ -9,6 +9,7 @@ import { MdOutlineBookmark } from "react-icons/md";
 import { useSelector } from 'react-redux';
 import "./Myscroll.css";
 import SearchBar from "./SearchBar";
+import { SERVER } from "./constants";
 
 function Home() {
   const search_token = useSelector((state) => state.search_token);
@@ -40,7 +41,7 @@ function Home() {
   const getRecommanded = async () => {
     const options = {
       method: "GET",
-      url: "https://testmongo-bjvb.onrender.com/api/get/all/movies",
+      url: `${SERVER}/get/all/movies`,
       headers: {
         "x-access-token": search_token,
       },
