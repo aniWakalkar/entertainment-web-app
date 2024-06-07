@@ -7,11 +7,11 @@ import { CiBookmark } from "react-icons/ci";
 import { FaPlayCircle } from "react-icons/fa";
 import { MdOutlineBookmark } from "react-icons/md";
 import { useSelector } from 'react-redux';
-import { X_RAPIDAPI_KEY } from "../constants";
 import "./Myscroll.css";
 import SearchBar from "./SearchBar";
 
 function TvSeries() {
+  const search_token = useSelector((state) => state.search_token);
   const[localTv_Series, setLocalGetTv_Series] = useState([])
   const search_Query_1 = useSelector((state) => state.search_Query);
   const [searchResults, setSearchResults] = useState([]);
@@ -24,7 +24,7 @@ function TvSeries() {
       method: "GET",
       url: "https://testmongo-bjvb.onrender.com/api/get/all/tvseries",
       headers: {
-        "x-access-token": X_RAPIDAPI_KEY,
+        "x-access-token": search_token,
       },
     };
 
@@ -43,7 +43,7 @@ const handle_Bookmark = async (e)=>{
       {
         headers: {
             'Content-Type': 'application/json',
-            'x-access-token': X_RAPIDAPI_KEY
+            'x-access-token': search_token
         }
       });
     } catch (error) {
@@ -58,7 +58,7 @@ const handle_Bookmark_Remove = async (e)=>{
     {
         headers: {
             'Content-Type': 'application/json',
-            'x-access-token': X_RAPIDAPI_KEY
+            'x-access-token': search_token
         }
     });
 

@@ -7,11 +7,11 @@ import { CiBookmark } from "react-icons/ci";
 import { FaPlayCircle } from "react-icons/fa";
 import { MdOutlineBookmark } from "react-icons/md";
 import { useSelector } from 'react-redux';
-import { X_RAPIDAPI_KEY } from "../constants";
 import "./Myscroll.css";
 import SearchBar from "./SearchBar";
 
 function Home() {
+  const search_token = useSelector((state) => state.search_token);
   const search_Query_1 = useSelector((state) => state.search_Query);
   const [trending, setTrending] = useState([])
   const [recommanded, setRecommanded] = useState([])
@@ -25,7 +25,7 @@ function Home() {
   //     method: "GET",
   //     url: "https://testmongo-bjvb.onrender.com/api/get/all/movies",
   //     headers: {
-  //       "x-access-token": X_RAPIDAPI_KEY,
+  //       "x-access-token": search_token,
   //     },
   //   };
 
@@ -42,7 +42,7 @@ function Home() {
       method: "GET",
       url: "https://testmongo-bjvb.onrender.com/api/get/all/movies",
       headers: {
-        "x-access-token": X_RAPIDAPI_KEY,
+        "x-access-token": search_token,
       },
     };
 
@@ -61,7 +61,7 @@ function Home() {
         {
           headers: {
               'Content-Type': 'application/json',
-              'x-access-token': X_RAPIDAPI_KEY
+              'x-access-token': search_token
           }
         });
 
@@ -77,7 +77,7 @@ function Home() {
       {
           headers: {
               'Content-Type': 'application/json',
-              'x-access-token': X_RAPIDAPI_KEY
+              'x-access-token': search_token
           }
       });
 

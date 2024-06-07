@@ -30,14 +30,13 @@ export default function NavbarSimple() {
   const navigate = useNavigate()
   
   const handleLogOut = () => {
-    // auth.logged = false;
-    // localStorage.setItem("user", JSON.stringify(auth));
+    localStorage.removeItem("user");
     // // Navigate to the logIn page
-    // navigate("/entertainment-web-app/logIn");
-    // localStorage.setItem("isActive", JSON.stringify(0));
+    navigate("/entertainment-web-app/logIn");
+    localStorage.setItem("isActive", JSON.stringify(0));
     console.log("false")
   };
-
+  const auth = JSON.parse(localStorage.getItem('user'))
   const [isActive, setIsActive] = useState(() => {
     const storedActiveTab = localStorage.getItem("isActive");
     return storedActiveTab !== null ? parseInt(storedActiveTab) : 0;

@@ -7,10 +7,10 @@ import { CiBookmark } from "react-icons/ci";
 import { FaPlayCircle } from "react-icons/fa";
 import { MdOutlineBookmark } from "react-icons/md";
 import { useSelector } from 'react-redux';
-import { X_RAPIDAPI_KEY } from "../constants";
 import SearchBar from "./SearchBar";
 
 function Saved() {
+  const search_token = useSelector((state) => state.search_token);
   const search_Query_1 = useSelector((state) => state.search_Query);
   const [searchMoviesResults, setSearchMoviesResults] = useState([]);
   const [searchedMovieItem, setSearchedMovieItem] = useState(false);
@@ -27,7 +27,7 @@ function Saved() {
       method: "GET",
       url: "https://testmongo-bjvb.onrender.com/api/bookmark/get/movies",
       headers: {
-        "x-access-token": X_RAPIDAPI_KEY,
+        "x-access-token": search_token,
       },
     };
 
@@ -43,7 +43,7 @@ function Saved() {
       method: "GET",
       url: "https://testmongo-bjvb.onrender.com/api/bookmark/get/tvseries",
       headers: {
-        "x-access-token": X_RAPIDAPI_KEY,
+        "x-access-token": search_token,
       },
     };
 
@@ -61,7 +61,7 @@ function Saved() {
       {
         headers: {
             'Content-Type': 'application/json',
-            'x-access-token': X_RAPIDAPI_KEY
+            'x-access-token': search_token
         }
       });
     } catch (error) {
@@ -75,7 +75,7 @@ function Saved() {
       {
           headers: {
               'Content-Type': 'application/json',
-              'x-access-token': X_RAPIDAPI_KEY
+              'x-access-token': search_token
           }
       });
 
@@ -91,7 +91,7 @@ function Saved() {
       {
         headers: {
             'Content-Type': 'application/json',
-            'x-access-token': X_RAPIDAPI_KEY
+            'x-access-token': search_token
         }
       });
     } catch (error) {
@@ -105,7 +105,7 @@ function Saved() {
       {
           headers: {
               'Content-Type': 'application/json',
-              'x-access-token': X_RAPIDAPI_KEY
+              'x-access-token': search_token
           }
       });
 
