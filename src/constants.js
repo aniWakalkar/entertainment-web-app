@@ -1,5 +1,5 @@
 // Home, Movies, TvSeries
-export const X_RAPIDAPI_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTVmYWM3MjFiYjIzZDg3MzM4ZWY2YiIsImlhdCI6MTcxNzY5NjYzMywiZXhwIjoxNzE3NzAzODMzfQ.C60U2B-OW7za_thd-zjEZ2cW0WG5A7Avbw3ctqp1Ybk";
+export const X_RAPIDAPI_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTVmYWM3MjFiYjIzZDg3MzM4ZWY2YiIsImlhdCI6MTcxNzczNzEwMCwiZXhwIjoxNzE3NzQ0MzAwfQ.zOcWAc40VWy9F5cEsQvZzRIc-zZBhM7BdEEKhelZWy0";
 
 // Home, Movies
 export const X_RAPIDAPI_HOST = "flixster.p.rapidapi.com";
