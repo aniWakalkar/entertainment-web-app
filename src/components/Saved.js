@@ -6,10 +6,12 @@ import React, { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaPlayCircle } from "react-icons/fa";
 import { MdOutlineBookmark } from "react-icons/md";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { handle_bookmark } from "../store/action/actions";
 import SearchBar from "./SearchBar";
 
 function Saved() {
+  const dispatch = useDispatch()
   const search_token = useSelector((state) => state.search_token);
   const search_Query_1 = useSelector((state) => state.search_Query);
   const [searchMoviesResults, setSearchMoviesResults] = useState([]);
@@ -57,6 +59,7 @@ function Saved() {
 
   const handle_Save_Movies_Bookmark = async (e)=>{
     try {
+      dispatch(handle_bookmark(1));
       const response = await axios.post('https://testmongo-bjvb.onrender.com/api/bookmark/set/movie', { "id" : e.id}, 
       {
         headers: {
@@ -71,6 +74,7 @@ function Saved() {
   }
   const handle_Remove_Movies_Bookmark = async (e)=>{
     try {
+      dispatch(handle_bookmark(0));
       const response = await axios.delete(`https://testmongo-bjvb.onrender.com/api/bookmark/delete/movie/${e.id}`, 
       {
           headers: {
@@ -87,6 +91,7 @@ function Saved() {
   
   const handle_Save_Series_Bookmark = async (e)=>{
     try {
+      dispatch(handle_bookmark(1));
       const response = await axios.post('https://testmongo-bjvb.onrender.com/api/bookmark/set/tvseries', { "id" : e.id}, 
       {
         headers: {
@@ -101,6 +106,7 @@ function Saved() {
   }
   const handle_Remove_Series_Bookmark = async (e)=>{
     try {
+      dispatch(handle_bookmark(0));
       const response = await axios.delete(`https://testmongo-bjvb.onrender.com/api/bookmark/delete/tvseries/${e.id}`, 
       {
           headers: {

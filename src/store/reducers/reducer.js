@@ -17,6 +17,15 @@ export const handleToken = (state = initialState, action) => {
   }
 };
 
+export const handleBookmark = (state = initialState, action) => {
+  switch (action.type) {
+    case "BOOKMARKED":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 export const Authentication = (state = initialState, action) => {
   switch (action.type) {
     case "AUTH":

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
+import { IoNotificationsCircleSharp } from "react-icons/io5";
 import { MdOutlineMovie } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,7 +12,7 @@ const LogIn = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const search_token = useSelector((state) => state.search_token);
-  const [token, setToken] = useState('')
+  const [token, setToken] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -29,6 +30,7 @@ const LogIn = () => {
     e.preventDefault();
     // Handle form submission, e.g., call an API to log in the user
     try {
+      setToken(true);
       const response = await axios.post('https://testmongo-bjvb.onrender.com/api/login', formData, 
       {
         headers: {
@@ -37,7 +39,7 @@ const LogIn = () => {
       });
 
       // localStorage.setItem('user', JSON.stringify(response.data.token));
-      setToken(response.data.token);
+      console.log("Requesting for token...")
       dispatch(handle_token(response.data.token));
     } catch (error) {
         console.error('Failed to send data:', error);
@@ -45,12 +47,22 @@ const LogIn = () => {
   };
 
   useEffect(() => {
-    token && navigate("/entertainment-web-app/")
+    search_token && navigate("/entertainment-web-app/")
+    setTimeout(() => {
+      setToken(false);
+    }, 2000);
   }, [token, search_token])
 
 
   return (
     <div className="w-full text-black flex justify-center outfit_light h-full"> 
+      {
+        token &&
+        <div className="fixed top-0 right-0 m-4 z-50 p-4 shadow-lg w-[250px] flex items-center justify-around bg-white text-black px-3">
+          <IoNotificationsCircleSharp className="w-[20px] h-[25px]"/>
+          {token && <p> Logging in...</p>}
+        </div> 
+      }
       <div className="text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border w-full mt-14">
         <MdOutlineMovie className='text-[#FC4747] mx-auto w-[50px] h-[55px]'/>
         <form 

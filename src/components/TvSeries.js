@@ -6,11 +6,13 @@ import React, { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaPlayCircle } from "react-icons/fa";
 import { MdOutlineBookmark } from "react-icons/md";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { handle_bookmark } from "../store/action/actions";
 import "./Myscroll.css";
 import SearchBar from "./SearchBar";
 
 function TvSeries() {
+  const dispatch = useDispatch()
   const search_token = useSelector((state) => state.search_token);
   const[localTv_Series, setLocalGetTv_Series] = useState([])
   const search_Query_1 = useSelector((state) => state.search_Query);
@@ -39,6 +41,7 @@ function TvSeries() {
 
 const handle_Bookmark = async (e)=>{
     try {
+      dispatch(handle_bookmark(1));
       const response = await axios.post('https://testmongo-bjvb.onrender.com/api/bookmark/set/tvseries', { "id" : e.id}, 
       {
         headers: {
@@ -54,6 +57,7 @@ const handle_Bookmark = async (e)=>{
 
 const handle_Bookmark_Remove = async (e)=>{
   try {
+    dispatch(handle_bookmark(0));
     const response = await axios.delete(`https://testmongo-bjvb.onrender.com/api/bookmark/delete/tvseries/${e.id}`, 
     {
         headers: {
@@ -93,10 +97,10 @@ useEffect(() => {
 
   return (
     <div
-      className="w-full text-white lg:p-4"
+      className="relative w-full text-white lg:p-4"
     > 
       <SearchBar/>
-      <div className="tv_series p-2 my-2">
+      <div className="relative tv_series p-2 my-2">
         <h4 className="outfit_light" style={{fontSize:"24px"}}>TV series</h4>
         <div className="list">
 

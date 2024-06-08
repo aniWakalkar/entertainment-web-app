@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { IoNotificationsCircleSharp } from "react-icons/io5";
 import { MdOutlineMovie } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 import "./Myscroll.css";
 
 const SignUp = () => {
   const navigate = useNavigate()
+  const [token, setToken] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -24,22 +26,34 @@ const SignUp = () => {
     e.preventDefault();
     // Handle form submission, e.g., call an API to log in the user
     try {
+      setToken(true);
       const response = await axios.post('https://testmongo-bjvb.onrender.com/api/signup', formData, 
       {
         headers: {
             'Content-Type': 'application/json',
         }
       });
-
+      console.log("Navigating to login page...")
       navigate("/entertainment-web-app/logIn")
     } catch (error) {
         console.error('Failed to send data:', error);
     }
   };
-
+  useEffect(() => {
+    setTimeout(() => {
+      setToken(false);
+    }, 2000);
+  }, [token])
 
   return (
     <div className="w-full text-black flex justify-center outfit_light h-full"> 
+      {
+        token &&
+        <div className="fixed top-0 right-0 m-4 z-50 p-4 shadow-lg w-[250px] flex items-center justify-around bg-white text-black px-3">
+          <IoNotificationsCircleSharp className="w-[20px] h-[25px]"/>
+          {token && <p> Signing in...</p>}
+        </div> 
+      }
       <div className="text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border w-full mt-14">
         <MdOutlineMovie className='text-[#FC4747] mx-auto w-[50px] h-[55px]' />
         <form 

@@ -13,6 +13,13 @@ export const handle_token = (query) => {
     };
   };
 
+export const handle_bookmark = (query) => {
+    return {
+      type: "BOOKMARKED",
+      payload: query,
+    };
+  };
+
 
 export const handle_authentication = (query) => {
   return {
