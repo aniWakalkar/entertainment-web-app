@@ -43,7 +43,7 @@ const SignUp = () => {
       console.log('Failed to send data:', error);
     }
   };
-  
+
   useEffect(() => {
     setTimeout(() => {
       setToken("");
@@ -77,6 +77,7 @@ const SignUp = () => {
                 placeholder='Email address'
                 autoComplete='email'
                 style={{ borderBottom: "1px solid gray" }}
+                required
                 className="peer h-full w-full bg-transparent px-3 py-2 text-gray-400 outline outline-0 transition-all disabled:bg-blue-gray-50 outline-none placeholder:text-gray-400 md:text-[18px]" />
             </div>
             <div className="h-11 w-full min-w-[200px]">
@@ -88,6 +89,7 @@ const SignUp = () => {
                 placeholder='Password'
                 autoComplete='off'
                 style={{ borderBottom: "1px solid gray" }}
+                required
                 className="peer h-full w-full bg-transparent px-3 py-2 text-gray-400 outline outline-0 transition-all disabled:bg-blue-gray-50 outline-none placeholder:text-gray-400 md:text-[18px]" />
             </div>
             <div className="h-11 w-full min-w-[200px]">
@@ -99,10 +101,11 @@ const SignUp = () => {
                 placeholder='Repeat password'
                 autoComplete='off'
                 style={{ borderBottom: "1px solid gray" }}
+                required
                 className="peer h-full w-full bg-transparent px-3 py-2 text-gray-400 outline outline-0 transition-all disabled:bg-blue-gray-50 outline-none placeholder:text-gray-400 md:text-[18px]" />
             </div>
             <button
-              className="block w-full select-none rounded-md bg-[#FC4747] py-2 px-6 text-center align-middle text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none md:text-[18px]"
+              className="block w-full select-none rounded-md bg-[#FC4747] py-2 px-6 text-center align-middle text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 md:text-[18px]"
               type="submit">
               Create an account
             </button>

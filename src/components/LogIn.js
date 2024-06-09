@@ -84,6 +84,7 @@ const LogIn = () => {
                 onChange={handleChange}
                 placeholder='Email address'
                 autoComplete='email'
+                required
                 style={{ borderBottom: "1px solid gray" }}
                 className="peer h-full w-full bg-transparent px-3 py-2 text-gray-400 outline outline-0 transition-all disabled:bg-blue-gray-50 outline-none placeholder:text-gray-400 md:text-[18px]" />
             </div>
@@ -95,6 +96,7 @@ const LogIn = () => {
                 placeholder='Password'
                 type='password'
                 autoComplete='off'
+                required
                 style={{ borderBottom: "1px solid gray" }}
                 className="peer h-full w-full bg-transparent px-3 py-2 text-gray-400 outline outline-0 transition-all disabled:bg-blue-gray-50 outline-none placeholder:text-gray-400 md:text-[18px]" />
             </div>
