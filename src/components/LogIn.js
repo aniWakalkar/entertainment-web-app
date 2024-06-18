@@ -5,8 +5,8 @@ import { MdOutlineMovie } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { handle_token } from "../store/action/actions";
-
 import "./Myscroll.css";
+import { LOCAL_SERVER } from "./constants";
 
 const LogIn = () => {
   const dispatch = useDispatch()
@@ -31,7 +31,7 @@ const LogIn = () => {
     // Handle form submission, e.g., call an API to log in the user
     try {
       
-      const response = await axios.post('https://testmongo-bjvb.onrender.com/api/login', formData, 
+      const response = await axios.post(`${LOCAL_SERVER}/login`, formData, 
       {
         headers: {
             'Content-Type': 'application/json',

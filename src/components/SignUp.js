@@ -4,6 +4,7 @@ import { IoNotificationsCircleSharp } from "react-icons/io5";
 import { MdOutlineMovie } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 import "./Myscroll.css";
+import { LOCAL_SERVER } from "./constants";
 
 const SignUp = () => {
   const navigate = useNavigate()
@@ -27,7 +28,7 @@ const SignUp = () => {
     // Handle form submission, e.g., call an API to log in the user
     try {
 
-      await axios.post('https://testmongo-bjvb.onrender.com/api/signup', formData, 
+      await axios.post(`${LOCAL_SERVER}/signup`, formData, 
       {
         headers: {
             'Content-Type': 'application/json',

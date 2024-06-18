@@ -10,9 +10,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { handle_bookmark } from "../store/action/actions";
 import "./Myscroll.css";
 import SearchBar from "./SearchBar";
+import { LOCAL_SERVER } from "./constants";
 
 function Movies() {
   const dispatch = useDispatch()
+  const [checker, setChecker] = useState('')
   const[localGetMovies, setLocalGetMovies] = useState([])
   const search_token = useSelector((state) => state.search_token);
   const search_Query_1 = useSelector((state) => state.search_Query);
@@ -24,7 +26,7 @@ function Movies() {
   const getMovies = async () => {
     const options = {
       method: "GET",
-      url: "https://testmongo-bjvb.onrender.com/api/get/all/movies",
+      url: `${LOCAL_SERVER}/get/all/movies`,
       headers: {
         "x-access-token": search_token,
       },
@@ -32,44 +34,46 @@ function Movies() {
 
     try {
       const response = await axios.request(options);
-      setLocalGetMovies(response.data)
+      setLocalGetMovies(response.data.movies)
+      setChecker(response.data.id)
+      console.log(response.data)
     } catch (error) {
       console.error(error);
     }
   };
   
-const handle_Bookmark = async (e)=>{
-    try {
-      dispatch(handle_bookmark(1));
-      const response = await axios.post('https://testmongo-bjvb.onrender.com/api/bookmark/set/movie', { "id" : e.id}, 
-      {
-        headers: {
-            'Content-Type': 'application/json',
-            'x-access-token': search_token
-        }
-      });
-    } catch (error) {
-        console.error('Failed to send data:', error);
-    }
-  set_isBookMarkedMovies(1)
-}
-
-const handle_Bookmark_Remove = async (e)=>{
-  try {
-    dispatch(handle_bookmark(0));
-    const response = await axios.delete(`https://testmongo-bjvb.onrender.com/api/bookmark/delete/movie/${e.id}`, 
-    {
-        headers: {
-            'Content-Type': 'application/json',
-            'x-access-token': search_token
-        }
-    });
-
-  } catch (error) {
-    console.error('Failed to send data:', error);
+  const handle_Bookmark = async (e)=>{
+      try {
+        dispatch(handle_bookmark(1));
+        await axios.post(`${LOCAL_SERVER}/bookmark/set/movie`, { "id" : e._id}, 
+        {
+          headers: {
+              'Content-Type': 'application/json',
+              'x-access-token': search_token
+          }
+        });
+      } catch (error) {
+          console.error('Failed to send data:', error);
+      }
+    set_isBookMarkedMovies(1)
   }
-  set_isBookMarkedMovies(1)
-}
+
+  const handle_Bookmark_Remove = async (e)=>{
+    try {
+      dispatch(handle_bookmark(0));
+      await axios.delete(`${LOCAL_SERVER}/bookmark/delete/movie/${e._id}`, 
+      {
+          headers: {
+              'Content-Type': 'application/json',
+              'x-access-token': search_token
+          }
+      });
+
+    } catch (error) {
+      console.error('Failed to send data:', error);
+    }
+    set_isBookMarkedMovies(1)
+  }
 
   useEffect(() => {
     getMovies();
@@ -125,8 +129,8 @@ const handle_Bookmark_Remove = async (e)=>{
                       </div>
                     </div>
                     {
-              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarked  ? handle_Bookmark_Remove(data): handle_Bookmark(data) }}>
-              {data.bookmarked? 
+              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarks.includes(checker)  ? handle_Bookmark_Remove(data): handle_Bookmark(data) }}>
+              {data.bookmarks.includes(checker)? 
                 <MdOutlineBookmark style={{ width: "20px", height: "21px" }} /> 
                 : 
                 <CiBookmark style={{ width: "20px", height: "21px" }} />
@@ -167,8 +171,8 @@ const handle_Bookmark_Remove = async (e)=>{
                       </div>
                     </div>
                     {
-              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarked  ? handle_Bookmark_Remove(data): handle_Bookmark(data) }}>
-              {data.bookmarked? 
+              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarks.includes(checker)  ? handle_Bookmark_Remove(data): handle_Bookmark(data) }}>
+              {data.bookmarks.includes(checker)? 
                 <MdOutlineBookmark style={{ width: "20px", height: "21px" }} /> 
                 : 
                 <CiBookmark style={{ width: "20px", height: "21px" }} />

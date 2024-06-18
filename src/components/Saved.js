@@ -9,6 +9,7 @@ import { MdOutlineBookmark } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { handle_bookmark } from "../store/action/actions";
 import SearchBar from "./SearchBar";
+import { LOCAL_SERVER } from "./constants";
 
 function Saved() {
   const dispatch = useDispatch()
@@ -27,7 +28,7 @@ function Saved() {
   const getMovies = async () => {
     const options = {
       method: "GET",
-      url: "https://testmongo-bjvb.onrender.com/api/bookmark/get/movies",
+      url: `${LOCAL_SERVER}/bookmark/get/movies`,
       headers: {
         "x-access-token": search_token,
       },
@@ -43,7 +44,7 @@ function Saved() {
   const getTv_series = async () => {
     const options = {
       method: "GET",
-      url: "https://testmongo-bjvb.onrender.com/api/bookmark/get/tvseries",
+      url: `${LOCAL_SERVER}/bookmark/get/tvseries`,
       headers: {
         "x-access-token": search_token,
       },
@@ -60,7 +61,7 @@ function Saved() {
   const handle_Save_Movies_Bookmark = async (e)=>{
     try {
       dispatch(handle_bookmark(1));
-      const response = await axios.post('https://testmongo-bjvb.onrender.com/api/bookmark/set/movie', { "id" : e.id}, 
+      await axios.post(`${LOCAL_SERVER}/bookmark/set/movie`, { "id" : e._id}, 
       {
         headers: {
             'Content-Type': 'application/json',
@@ -75,7 +76,7 @@ function Saved() {
   const handle_Remove_Movies_Bookmark = async (e)=>{
     try {
       dispatch(handle_bookmark(0));
-      const response = await axios.delete(`https://testmongo-bjvb.onrender.com/api/bookmark/delete/movie/${e.id}`, 
+      await axios.delete(`${LOCAL_SERVER}/bookmark/delete/movie/${e._id}`, 
       {
           headers: {
               'Content-Type': 'application/json',
@@ -92,7 +93,7 @@ function Saved() {
   const handle_Save_Series_Bookmark = async (e)=>{
     try {
       dispatch(handle_bookmark(1));
-      const response = await axios.post('https://testmongo-bjvb.onrender.com/api/bookmark/set/tvseries', { "id" : e.id}, 
+      await axios.post(`${LOCAL_SERVER}/bookmark/set/tvseries`, { "id" : e._id}, 
       {
         headers: {
             'Content-Type': 'application/json',
@@ -107,7 +108,7 @@ function Saved() {
   const handle_Remove_Series_Bookmark = async (e)=>{
     try {
       dispatch(handle_bookmark(0));
-      const response = await axios.delete(`https://testmongo-bjvb.onrender.com/api/bookmark/delete/tvseries/${e.id}`, 
+      await axios.delete(`${LOCAL_SERVER}/bookmark/delete/tvseries/${e._id}`, 
       {
           headers: {
               'Content-Type': 'application/json',
@@ -199,8 +200,8 @@ function Saved() {
                       </div>
                     </div>
                     {
-              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarked  ? handle_Remove_Movies_Bookmark(data): handle_Save_Movies_Bookmark(data) }}>
-              {data.bookmarked? 
+              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarks.length !== 0  ? handle_Remove_Movies_Bookmark(data): handle_Save_Movies_Bookmark(data) }}>
+              {data.bookmarks.length !== 0? 
                 <MdOutlineBookmark style={{ width: "20px", height: "21px" }} /> 
                 : 
                 <CiBookmark style={{ width: "20px", height: "21px" }} />
@@ -233,8 +234,8 @@ function Saved() {
                       </div>
                     </div>
                     {
-              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarked  ? handle_Remove_Movies_Bookmark(data): handle_Save_Movies_Bookmark(data) }}>
-              {data.bookmarked? 
+              <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarks.length !== 0  ? handle_Remove_Movies_Bookmark(data): handle_Save_Movies_Bookmark(data) }}>
+              {data.bookmarks.length !== 0? 
                 <MdOutlineBookmark style={{ width: "20px", height: "21px" }} /> 
                 : 
                 <CiBookmark style={{ width: "20px", height: "21px" }} />
@@ -275,8 +276,8 @@ function Saved() {
                         </div>
                       </div>
                       {
-                <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarked  ? handle_Remove_Series_Bookmark(data): handle_Save_Series_Bookmark(data) }}>
-                {data.bookmarked? 
+                <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarks.length !== 0  ? handle_Remove_Series_Bookmark(data): handle_Save_Series_Bookmark(data) }}>
+                {data.bookmarks.length !== 0? 
                   <MdOutlineBookmark style={{ width: "20px", height: "21px" }} /> 
                   : 
                   <CiBookmark style={{ width: "20px", height: "21px" }} />
@@ -309,8 +310,8 @@ function Saved() {
                         </div>
                       </div>
                       {
-                <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarked  ? handle_Remove_Series_Bookmark(data): handle_Save_Series_Bookmark(data) }}>
-                {data.bookmarked? 
+                <div className="absolute text-white hover:text-red-400 bg-[#0707078f] p-1 rounded-full" style={{ top: "8px", right: "16px" }} onClick={() => { data.bookmarks.length !== 0  ? handle_Remove_Series_Bookmark(data): handle_Save_Series_Bookmark(data) }}>
+                {data.bookmarks.length !== 0? 
                   <MdOutlineBookmark style={{ width: "20px", height: "21px" }} /> 
                   : 
                   <CiBookmark style={{ width: "20px", height: "21px" }} />

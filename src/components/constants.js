@@ -4,4 +4,4 @@ export const GET_OPENING_MOVIES = "https://flixster.p.rapidapi.com/movies/get-op
 
 // TvSeries
 export const GET_OPENING_SERIES = "https://imdb-top-100-movies.p.rapidapi.com/series/";
-export const SERVER = "https://testmongo-bjvb.onrender.com/api";
+export const LOCAL_SERVER = "https://testmongo-bjvb.onrender.com/api";
