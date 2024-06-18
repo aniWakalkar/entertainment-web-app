@@ -29,24 +29,30 @@ const LogIn = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     // Handle form submission, e.g., call an API to log in the user
-    try {
-      
-      const response = await axios.post(`${LOCAL_SERVER}/login`, formData, 
-      {
-        headers: {
-            'Content-Type': 'application/json',
-        }
-      });
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const isValid = emailPattern.test(formData.email);
+    if(!isValid){
+      setToken(2);
+    }else{
+      try {
+        
+        const response = await axios.post(`${LOCAL_SERVER}/login`, formData, 
+        {
+          headers: {
+              'Content-Type': 'application/json',
+          }
+        });
 
-      // localStorage.setItem('user', JSON.stringify(response.data.token));
-      console.log("Requesting for token...")
-      setToken(1);
-      dispatch(handle_token(response.data.token));
-    } catch (error) {
-      if(error.response.status === 401){
-        setToken(0);
+        // localStorage.setItem('user', JSON.stringify(response.data.token));
+        console.log("Requesting for token...")
+        setToken(1);
+        dispatch(handle_token(response.data.token));
+      } catch (error) {
+        if(error.response.status === 401){
+          setToken(0);
+        }
+        console.error('Failed to send data:', error);
       }
-      console.error('Failed to send data:', error);
     }
   };
 
@@ -54,7 +60,7 @@ const LogIn = () => {
     search_token && navigate("/entertainment-web-app/")
     setTimeout(() => {
       setToken("");
-    }, 2000);
+    }, 2800);
   }, [token, search_token, navigate])
 
 
@@ -62,10 +68,11 @@ const LogIn = () => {
     <div className="w-full text-black flex justify-center outfit_light h-full"> 
       {
         token !== "" &&
-        <div className="fixed top-0 right-0 m-4 z-50 p-4 shadow-lg w-[250px] flex items-center justify-around bg-white text-black px-3">
-          <IoNotificationsCircleSharp className="w-[20px] h-[25px]"/>
+        <div className="fixed top-0 right-0 m-4 z-50 p-4 shadow-lg w-[350px] flex items-center justify-around bg-white text-black px-3">
           {token === 1 && <p> Logging in...</p>}
           {token === 0 && <p> Password does not match...</p>}
+          {token === 2 && <p> Please provide a valid email address...</p>}
+          <IoNotificationsCircleSharp className="w-[20px] h-[25px]"/>
         </div> 
       }
       <div className="text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border w-full mt-14">

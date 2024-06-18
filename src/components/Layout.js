@@ -20,9 +20,9 @@ function Layout() {
         <Route path="/entertainment-web-app/logIn" element={<LogIn />} />
         <Route element={<PrivateComponent />}>
           <Route path="/entertainment-web-app/" element={<Home />} />
-          <Route path="/entertainment-web-app/Movies" element={<Movies />} />
-          <Route path="/entertainment-web-app/Tv_series" element={<TvSeries />} />
-          <Route path="/entertainment-web-app/Saved" element={<Saved />} />
+          <Route path="/entertainment-web-app/movies" element={<Movies />} />
+          <Route path="/entertainment-web-app/tv_series" element={<TvSeries />} />
+          <Route path="/entertainment-web-app/saved" element={<Saved />} />
         </Route>
       </Routes>
     </Router>

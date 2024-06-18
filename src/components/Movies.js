@@ -36,7 +36,6 @@ function Movies() {
       const response = await axios.request(options);
       setLocalGetMovies(response.data.movies)
       setChecker(response.data.id)
-      console.log(response.data)
     } catch (error) {
       console.error(error);
     }

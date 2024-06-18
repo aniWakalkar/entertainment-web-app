@@ -16,15 +16,15 @@ const List = [
   },
   {
     tabName: <PiFilmReelFill className="w-[25px] h-[30px]"/>,
-    path: "/entertainment-web-app/Movies",
+    path: "/entertainment-web-app/movies",
   },
   {
     tabName: <PiTelevision className="w-[25px] h-[30px]"/>,
-    path: "/entertainment-web-app/Tv_series",
+    path: "/entertainment-web-app/tv_series",
   },
   {
     tabName: <CiBookmark className="w-[25px] h-[30px]"/>,
-    path: "/entertainment-web-app/Saved",
+    path: "/entertainment-web-app/saved",
   },
 ];
 

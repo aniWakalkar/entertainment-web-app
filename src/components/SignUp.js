@@ -26,39 +26,48 @@ const SignUp = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     // Handle form submission, e.g., call an API to log in the user
-    try {
-
-      await axios.post(`${LOCAL_SERVER}/signup`, formData, 
-      {
-        headers: {
-            'Content-Type': 'application/json',
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const isValid = emailPattern.test(formData.email);
+    if(!isValid){
+      setToken(2);
+    }else if(formData.password !== formData.rPassword){
+      setToken(3);
+    }else{
+      try {
+        await axios.post(`${LOCAL_SERVER}/signup`, formData, 
+        {
+          headers: {
+              'Content-Type': 'application/json',
+          }
+        });
+        setToken(1);
+        console.log("Navigating to login page...")
+        navigate("/entertainment-web-app/logIn")
+      } catch (error) {
+        if(error.response.status === 409){
+          setToken(0);
         }
-      });
-      setToken(1);
-      console.log("Navigating to login page...")
-      navigate("/entertainment-web-app/logIn")
-    } catch (error) {
-      if(error.response.status === 409){
-        setToken(0);
+        console.log('Failed to send data:', error);
       }
-      console.log('Failed to send data:', error);
     }
   };
 
   useEffect(() => {
     setTimeout(() => {
       setToken("");
-    }, 2000);
+    }, 2800);
   }, [token])
 
   return (
     <div className="w-full text-black flex justify-center outfit_light h-full"> 
       {
         token !== "" &&
-        <div className="fixed top-0 right-0 m-4 z-50 p-4 shadow-lg w-[250px] flex items-center justify-around bg-white text-black px-3">
+        <div className="fixed top-0 right-0 m-4 z-50 p-4 shadow-lg w-[350px] flex items-center justify-around bg-white text-black px-3">
+          {token === 1 && <p> Signing in.</p>}
+          {token === 0 && <p> User already exist.</p>}
+          {token === 2 && <p> Please provide a valid email address.</p>}
+          {token === 3 && <p> Password does not match.</p>}
           <IoNotificationsCircleSharp className="w-[20px] h-[25px]"/>
-          {token === 1 && <p> Signing in...</p>}
-          {token === 0 && <p> User already exist...</p>}
         </div> 
       }
       <div className="text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border w-full mt-14">
