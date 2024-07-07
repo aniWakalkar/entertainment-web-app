@@ -9,7 +9,7 @@ import { MdOutlineBookmark } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { handle_bookmark } from "../store/action/actions";
 import SearchBar from "./SearchBar";
-import { LOCAL_SERVER } from "./constants";
+import { GLOBAL_SERVER } from "./constants";
 
 function Saved() {
   const dispatch = useDispatch()
@@ -28,7 +28,7 @@ function Saved() {
   const getMovies = async () => {
     const options = {
       method: "GET",
-      url: `${LOCAL_SERVER}/bookmark/get/movies`,
+      url: `${GLOBAL_SERVER}/bookmark/get/movies`,
       headers: {
         "x-access-token": search_token,
       },
@@ -44,7 +44,7 @@ function Saved() {
   const getTv_series = async () => {
     const options = {
       method: "GET",
-      url: `${LOCAL_SERVER}/bookmark/get/tvseries`,
+      url: `${GLOBAL_SERVER}/bookmark/get/tvseries`,
       headers: {
         "x-access-token": search_token,
       },
@@ -61,7 +61,7 @@ function Saved() {
   const handle_Save_Movies_Bookmark = async (e)=>{
     try {
       dispatch(handle_bookmark(1));
-      await axios.post(`${LOCAL_SERVER}/bookmark/set/movie`, { "id" : e._id}, 
+      await axios.post(`${GLOBAL_SERVER}/bookmark/set/movie`, { "id" : e._id}, 
       {
         headers: {
             'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ function Saved() {
   const handle_Remove_Movies_Bookmark = async (e)=>{
     try {
       dispatch(handle_bookmark(0));
-      await axios.delete(`${LOCAL_SERVER}/bookmark/delete/movie/${e._id}`, 
+      await axios.delete(`${GLOBAL_SERVER}/bookmark/delete/movie/${e._id}`, 
       {
           headers: {
               'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ function Saved() {
   const handle_Save_Series_Bookmark = async (e)=>{
     try {
       dispatch(handle_bookmark(1));
-      await axios.post(`${LOCAL_SERVER}/bookmark/set/tvseries`, { "id" : e._id}, 
+      await axios.post(`${GLOBAL_SERVER}/bookmark/set/tvseries`, { "id" : e._id}, 
       {
         headers: {
             'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ function Saved() {
   const handle_Remove_Series_Bookmark = async (e)=>{
     try {
       dispatch(handle_bookmark(0));
-      await axios.delete(`${LOCAL_SERVER}/bookmark/delete/tvseries/${e._id}`, 
+      await axios.delete(`${GLOBAL_SERVER}/bookmark/delete/tvseries/${e._id}`, 
       {
           headers: {
               'Content-Type': 'application/json',

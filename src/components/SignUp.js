@@ -4,7 +4,7 @@ import { IoNotificationsCircleSharp } from "react-icons/io5";
 import { MdOutlineMovie } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 import "./Myscroll.css";
-import { LOCAL_SERVER } from "./constants";
+import { GLOBAL_SERVER } from "./constants";
 
 const SignUp = () => {
   const navigate = useNavigate()
@@ -34,7 +34,7 @@ const SignUp = () => {
       setToken(3);
     }else{
       try {
-        await axios.post(`${LOCAL_SERVER}/signup`, formData, 
+        await axios.post(`${GLOBAL_SERVER}/signup`, formData, 
         {
           headers: {
               'Content-Type': 'application/json',

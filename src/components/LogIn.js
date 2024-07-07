@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { handle_token } from "../store/action/actions";
 import "./Myscroll.css";
-import { LOCAL_SERVER } from "./constants";
+import { GLOBAL_SERVER } from "./constants";
 
 const LogIn = () => {
   const dispatch = useDispatch()
@@ -36,7 +36,7 @@ const LogIn = () => {
     }else{
       try {
         
-        const response = await axios.post(`${LOCAL_SERVER}/login`, formData, 
+        const response = await axios.post(`${GLOBAL_SERVER}/login`, formData, 
         {
           headers: {
               'Content-Type': 'application/json',

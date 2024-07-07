@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { handle_bookmark } from "../store/action/actions";
 import "./Myscroll.css";
 import SearchBar from "./SearchBar";
-import { LOCAL_SERVER } from "./constants";
+import { GLOBAL_SERVER } from "./constants";
 
 function TvSeries() {
   const dispatch = useDispatch()
@@ -26,7 +26,7 @@ function TvSeries() {
   const getTv_series = async () => {
     const options = {
       method: "GET",
-      url: `${LOCAL_SERVER}/get/all/tvseries`,
+      url: `${GLOBAL_SERVER}/get/all/tvseries`,
       headers: {
         "x-access-token": search_token,
       },
@@ -45,7 +45,7 @@ function TvSeries() {
   const handle_Bookmark = async (e)=>{
       try {
         dispatch(handle_bookmark(1));
-        await axios.post(`${LOCAL_SERVER}/bookmark/set/tvseries`, { "id" : e._id}, 
+        await axios.post(`${GLOBAL_SERVER}/bookmark/set/tvseries`, { "id" : e._id}, 
         {
           headers: {
               'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ function TvSeries() {
   const handle_Bookmark_Remove = async (e)=>{
     try {
       dispatch(handle_bookmark(0));
-      await axios.delete(`${LOCAL_SERVER}/bookmark/delete/tvseries/${e._id}`, 
+      await axios.delete(`${GLOBAL_SERVER}/bookmark/delete/tvseries/${e._id}`, 
       {
           headers: {
               'Content-Type': 'application/json',
